@@ -1,0 +1,454 @@
+<html>
+<!-- Head -->
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    
+    <title>ERICube</title>
+
+    <link rel="shortcut icon" href="/images/ericube.svg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style-mob.css">
+    <link rel="stylesheet" href="/css/hljs.css">
+
+    <script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+
+    <script src="/js/vendor/three.js"></script>
+    <script src="/js/vendor/jquery.min.js"></script>
+    <script src="/js/vendor/hljs.js"></script>
+    <script src="/js/vendor/OrbitControls.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+    
+    <script type="text/javascript" src="/js/src/index.js"></script>
+    <script type="text/javascript" src="/js/src/cube-head.js"></script>
+
+    
+    <link rel="stylesheet" href="/css/post.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigator -->
+    <nav id="nav-head">
+    <div id="nav-menu-btn">
+        <a href="/"><img src="/images/ericube.svg"></a>
+    </div>
+    
+    <div id="nav-menu">
+        
+    <a href="/">Home</a>
+
+    <a href="/about">About</a>
+
+    <a href="/tags/blog">Blog</a>
+
+    <a href="/#sec-project">Projects</a>
+
+<!-- <a href="/#sec-project">Projects</a> -->
+<!-- <a><strong>Technical Artist</strong></a> -->
+<!-- <a><strong>Gameplay Engineer</strong></a> -->
+    </div>
+    
+
+    
+    <div id="post-meta">
+        <div>
+            <h2>project</h2>
+            <h1>Technical Animation Projects</h1>
+            
+                <p class="tag">Mo-Cap</p>
+            
+                <p class="tag">Motion Editing</p>
+            
+                <p class="tag">IK</p>
+            
+        </div>
+    </div>
+    <div id="post-img">
+        <img class="img-responsive" src="/Project-9/ta.png">
+    </div>
+    
+</nav>
+
+    <!-- Body -->
+    <section id="sec-post">
+    <article id="atc-post">
+        <div id="post-content">
+            <h2 id="spring-mass-cloth-simulation">Spring-Mass Cloth simulation</h2>
+<div class="video-container"><iframe src="//www.youtube.com/embed/UlKflaqgb5w" frameborder="0" allowfullscreen></iframe></div>
+<h3 id="overview">Overview</h3>
+<p>A piece of cloth can be considered as a grid of particles and several springs that connect different particles. Springs act as a constraint on distance: applying a force to push away objects that are too close, or applying tension between objects that are too far. For this project, I created cloth that consists of mass nodes connected by springs and dampers and explore the effect of different stiffness and damping settings on simulation speed, stability and cloth appearance.</p>
+<p><strong>Duration</strong>: 3 weeks</p>
+<p><strong>Role</strong>: Programmer</p>
+<p><strong>Team</strong>: Solo</p>
+<p><strong>Platform</strong>: OpenGL</p>
+<h3 id="techniques">Techniques</h3>
+<h4 id="particle">Particle</h4>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c++"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">class</span> Particle{</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">public</span>:</span>
+<span id="cb1-3"><a href="#cb1-3"></a>    <span class="co">// ...</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>  </span>
+<span id="cb1-5"><a href="#cb1-5"></a>    Vector3f <span class="va">m_Position</span>;</span>
+<span id="cb1-6"><a href="#cb1-6"></a>    Vector3f <span class="va">m_Velocity</span>;</span>
+<span id="cb1-7"><a href="#cb1-7"></a>    Vector3f <span class="va">m_ForceAccumulator</span>;</span>
+<span id="cb1-8"><a href="#cb1-8"></a>    <span class="dt">float</span> <span class="va">m_Mass</span>;</span>
+<span id="cb1-9"><a href="#cb1-9"></a>};</span></code></pre></div>
+<h4 id="spring-force">Spring Force</h4>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c++"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">class</span> SpringForce : <span class="kw">public</span> Force {</span>
+<span id="cb2-2"><a href="#cb2-2"></a>    <span class="co">// ...</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="kw">public</span>:</span>
+<span id="cb2-4"><a href="#cb2-4"></a>    <span class="kw">virtual</span> <span class="dt">void</span> apply_force();</span>
+<span id="cb2-5"><a href="#cb2-5"></a></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="kw">private</span>:</span>
+<span id="cb2-7"><a href="#cb2-7"></a>    Particle *<span class="at">const</span> <span class="va">m_p1</span>; <span class="co">// particle1</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>    Particle *<span class="at">const</span> <span class="va">m_p2</span>; <span class="co">// particle2</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a>    <span class="dt">double</span> <span class="at">const</span> <span class="va">m_dist</span>;  <span class="co">// rest length</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>    <span class="dt">double</span> <span class="at">const</span> <span class="va">m_ks</span>, <span class="va">m_kd</span>; <span class="co">// spring constants</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a>};</span></code></pre></div>
+<p>To apply force to the two particles, we can use the equation <span class="math display">\[
+f_1=-[k_s(||p_1-p_2||-l_0)+k_d\cdot\frac{(v_1-v_2)\cdot(p_1-p_2)}{||p_1-p_2||}]\cdot\frac{p_1-p_2}{||p_1-p_2||}\\
+f_2 = -f_1
+\]</span> which is implemented by following code:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c++"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">// Compute and apply forcce to the two particles</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="dt">void</span> SpringForce::apply_force() {</span>
+<span id="cb3-3"><a href="#cb3-3"></a>    <span class="dt">float</span> norm = L2Norm(<span class="va">m_p1</span>-&gt;<span class="va">m_Position</span> - <span class="va">m_p2</span>-&gt;<span class="va">m_Position</span>);</span>
+<span id="cb3-4"><a href="#cb3-4"></a>    <span class="dt">float</span> product = DotProduct(</span>
+<span id="cb3-5"><a href="#cb3-5"></a>        <span class="va">m_p1</span>-&gt;<span class="va">m_Velocity</span> - <span class="va">m_p2</span>-&gt;<span class="va">m_Velocity</span>,</span>
+<span id="cb3-6"><a href="#cb3-6"></a>        <span class="va">m_p1</span>-&gt;<span class="va">m_Position</span> - <span class="va">m_p2</span>-&gt;<span class="va">m_Position</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a>    );</span>
+<span id="cb3-8"><a href="#cb3-8"></a></span>
+<span id="cb3-9"><a href="#cb3-9"></a>    Vector3f force = -(<span class="va">m_ks</span> * (norm - <span class="va">m_dist</span>) + <span class="va">m_kd</span> * (product / norm))</span>
+<span id="cb3-10"><a href="#cb3-10"></a>        * (<span class="va">m_p1</span>-&gt;<span class="va">m_Position</span> - <span class="va">m_p2</span>-&gt;<span class="va">m_Position</span>) / norm;</span>
+<span id="cb3-11"><a href="#cb3-11"></a></span>
+<span id="cb3-12"><a href="#cb3-12"></a>    <span class="va">m_p1</span>-&gt;<span class="va">m_ForceAccumulator</span> += force;</span>
+<span id="cb3-13"><a href="#cb3-13"></a>    <span class="va">m_p2</span>-&gt;<span class="va">m_ForceAccumulator</span> += -force;</span>
+<span id="cb3-14"><a href="#cb3-14"></a>}</span></code></pre></div>
+<h4 id="cloth">Cloth</h4>
+<p>First, a piece of cloth should be formed by creating a grid of particles.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1"></a>Cloth::Cloth() {</span>
+<span id="cb4-2"><a href="#cb4-2"></a>    <span class="co">// ...</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>    <span class="co">// Create a grid of particles to form a piece of cloth</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>    <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; width; i++) {</span>
+<span id="cb4-5"><a href="#cb4-5"></a>        <span class="cf">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; width; j++) {</span>
+<span id="cb4-6"><a href="#cb4-6"></a>            Vector3f pos = center;</span>
+<span id="cb4-7"><a href="#cb4-7"></a>            pos.x += i * offset;</span>
+<span id="cb4-8"><a href="#cb4-8"></a>            pos.z += j * offset;</span>
+<span id="cb4-9"><a href="#cb4-9"></a>            pVector.push_back(<span class="kw">new</span> Particle(pos));</span>
+<span id="cb4-10"><a href="#cb4-10"></a>        }</span>
+<span id="cb4-11"><a href="#cb4-11"></a>    }</span>
+<span id="cb4-12"><a href="#cb4-12"></a>}</span></code></pre></div>
+<p>Then, particles should be connected to each other by spring-dampers. There are three types of spring-dampers that are shown below:</p>
+<ul>
+<li>stretch springs <em>(also known as structural springs)</em></li>
+<li>shear springs</li>
+<li>bend springs</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gd3qnen9q2j31fa0huakr.jpg" style="width:67%;"></p>
+<p>All these types can be easily implemented by code:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">// Stretch springs</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; width; i++) {</span>
+<span id="cb5-3"><a href="#cb5-3"></a>    <span class="cf">for</span>  (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; width; j++) {</span>
+<span id="cb5-4"><a href="#cb5-4"></a>        Particle *current = pVector[i * width + j];</span>
+<span id="cb5-5"><a href="#cb5-5"></a>        <span class="cf">if</span> (i &lt; width - <span class="dv">1</span>) {</span>
+<span id="cb5-6"><a href="#cb5-6"></a>            Particle *bottom = pVector[(i + <span class="dv">1</span>) * width + j];</span>
+<span id="cb5-7"><a href="#cb5-7"></a>            fVector.push_back(<span class="kw">new</span> SpringForce(current, bottom, dist, ks, kd));</span>
+<span id="cb5-8"><a href="#cb5-8"></a>        }</span>
+<span id="cb5-9"><a href="#cb5-9"></a></span>
+<span id="cb5-10"><a href="#cb5-10"></a>        <span class="cf">if</span> (j &lt; width - <span class="dv">1</span>) {</span>
+<span id="cb5-11"><a href="#cb5-11"></a>            Particle *right = pVector[i * width + j + <span class="dv">1</span>];</span>
+<span id="cb5-12"><a href="#cb5-12"></a>            fVector.push_back(<span class="kw">new</span> SpringForce(current, right, dist, ks, kd));</span>
+<span id="cb5-13"><a href="#cb5-13"></a>        }</span>
+<span id="cb5-14"><a href="#cb5-14"></a>    }</span>
+<span id="cb5-15"><a href="#cb5-15"></a>}</span>
+<span id="cb5-16"><a href="#cb5-16"></a></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="co">// Shear springs</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; width; i++) {</span>
+<span id="cb5-19"><a href="#cb5-19"></a>    <span class="cf">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; width; j++) {</span>
+<span id="cb5-20"><a href="#cb5-20"></a>        Particle *current = pVector[i * width + j];</span>
+<span id="cb5-21"><a href="#cb5-21"></a>        <span class="cf">if</span> (i &lt; width - <span class="dv">1</span> &amp;&amp; j &lt; width - <span class="dv">1</span>) {</span>
+<span id="cb5-22"><a href="#cb5-22"></a>            Particle *right_bottom = pVector[(i + <span class="dv">1</span>) * width + j + <span class="dv">1</span>];</span>
+<span id="cb5-23"><a href="#cb5-23"></a>            fVector.push_back(<span class="kw">new</span> SpringForce(current, right_bottom, dist * sqrt(<span class="dv">2</span>), ks, kd));</span>
+<span id="cb5-24"><a href="#cb5-24"></a>        }</span>
+<span id="cb5-25"><a href="#cb5-25"></a></span>
+<span id="cb5-26"><a href="#cb5-26"></a>        <span class="cf">if</span> (i &lt; width - <span class="dv">1</span> &amp;&amp; j &gt; <span class="dv">0</span>) {</span>
+<span id="cb5-27"><a href="#cb5-27"></a>            Particle *left_bottom = pVector[(i + <span class="dv">1</span>) * width + j - <span class="dv">1</span>];</span>
+<span id="cb5-28"><a href="#cb5-28"></a>            fVector.push_back(<span class="kw">new</span> SpringForce(current, left_bottom, dist * sqrt(<span class="dv">2</span>), ks, kd));</span>
+<span id="cb5-29"><a href="#cb5-29"></a>        }</span>
+<span id="cb5-30"><a href="#cb5-30"></a>    }</span>
+<span id="cb5-31"><a href="#cb5-31"></a>}</span>
+<span id="cb5-32"><a href="#cb5-32"></a></span>
+<span id="cb5-33"><a href="#cb5-33"></a><span class="co">// Bend springs</span></span>
+<span id="cb5-34"><a href="#cb5-34"></a><span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; width; i++) {</span>
+<span id="cb5-35"><a href="#cb5-35"></a>    <span class="cf">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; width; j++) {</span>
+<span id="cb5-36"><a href="#cb5-36"></a>        Particle *current = pVector[i * width + j];</span>
+<span id="cb5-37"><a href="#cb5-37"></a>        <span class="cf">if</span> (i &lt; width - <span class="dv">2</span>) {</span>
+<span id="cb5-38"><a href="#cb5-38"></a>            Particle *bottom = pVector[(i + <span class="dv">2</span>) * width + j];</span>
+<span id="cb5-39"><a href="#cb5-39"></a>            fVector.push_back(<span class="kw">new</span> SpringForce(current, bottom, dist * <span class="dv">2</span>, ks, kd));</span>
+<span id="cb5-40"><a href="#cb5-40"></a>        }</span>
+<span id="cb5-41"><a href="#cb5-41"></a></span>
+<span id="cb5-42"><a href="#cb5-42"></a>        <span class="cf">if</span> (j &lt; width - <span class="dv">2</span>) {</span>
+<span id="cb5-43"><a href="#cb5-43"></a>            Particle *right = pVector[i * width + j + <span class="dv">2</span>];</span>
+<span id="cb5-44"><a href="#cb5-44"></a>            fVector.push_back(<span class="kw">new</span> SpringForce(current, right, dist * <span class="dv">2</span>, ks, kd));</span>
+<span id="cb5-45"><a href="#cb5-45"></a>        }</span>
+<span id="cb5-46"><a href="#cb5-46"></a>    }</span>
+<span id="cb5-47"><a href="#cb5-47"></a>}   </span></code></pre></div>
+<p>The actual spring structures in run time are shown as follows:</p>
+<p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gd81fym293j33100ow438.jpg"></p>
+<p>Finally, the cloth is simulated and updated frame by frame using explicit euler method.</p>
+<p><img src="https://tva1.sinaimg.cn/large/00831rSTgy1gd84ivbo21j31740towhv.jpg" alt="Screen Shot 2020-03-26 at 7.17.49 PM" style="width:67%;"></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="#cb6-1"></a><span class="dt">void</span> Cloth::simulation_step() {</span>
+<span id="cb6-2"><a href="#cb6-2"></a>    <span class="co">// Clear force accumulators for all the particles</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>    <span class="co">// And add gravity to all of them </span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>    <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; pVector.size(); i++) {</span>
+<span id="cb6-5"><a href="#cb6-5"></a>        pVector[i]-&gt;clear_force();</span>
+<span id="cb6-6"><a href="#cb6-6"></a>        pVector[i]-&gt;apply_force();</span>
+<span id="cb6-7"><a href="#cb6-7"></a>    }</span>
+<span id="cb6-8"><a href="#cb6-8"></a></span>
+<span id="cb6-9"><a href="#cb6-9"></a>    <span class="co">// Apply sprinf forces to all the particles</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a>    <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; fVector.size(); i++) {</span>
+<span id="cb6-11"><a href="#cb6-11"></a>        fVector[i]-&gt;apply_force();</span>
+<span id="cb6-12"><a href="#cb6-12"></a>    }</span>
+<span id="cb6-13"><a href="#cb6-13"></a></span>
+<span id="cb6-14"><a href="#cb6-14"></a>    <span class="co">// Implement hard constraints forces</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a>    <span class="dt">unsigned</span> <span class="dt">int</span> fixedParticleIndex[] = {</span>
+<span id="cb6-16"><a href="#cb6-16"></a>        <span class="dv">0</span>,</span>
+<span id="cb6-17"><a href="#cb6-17"></a>        width - <span class="dv">1</span>,</span>
+<span id="cb6-18"><a href="#cb6-18"></a>        (width - <span class="dv">1</span>) * width,</span>
+<span id="cb6-19"><a href="#cb6-19"></a>        width * width - <span class="dv">1</span>,</span>
+<span id="cb6-20"><a href="#cb6-20"></a>    };</span>
+<span id="cb6-21"><a href="#cb6-21"></a></span>
+<span id="cb6-22"><a href="#cb6-22"></a>    <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; <span class="kw">sizeof</span>(fixedParticleIndex) / <span class="dv">4</span>; i++) {</span>
+<span id="cb6-23"><a href="#cb6-23"></a>        pVector[fixedParticleIndex[i]]-&gt;clear_force();</span>
+<span id="cb6-24"><a href="#cb6-24"></a>    }</span>
+<span id="cb6-25"><a href="#cb6-25"></a></span>
+<span id="cb6-26"><a href="#cb6-26"></a>    <span class="co">// Handle integration</span></span>
+<span id="cb6-27"><a href="#cb6-27"></a>    euler_step();</span>
+<span id="cb6-28"><a href="#cb6-28"></a>}</span></code></pre></div>
+<h3 id="follow-up">Follow up</h3>
+<ul>
+<li>Handle contact with the environment and self-collisions</li>
+<li>Explore controlled cloth</li>
+</ul>
+<h2 id="integrators">Integrators</h2>
+<div class="video-container"><iframe src="//www.youtube.com/embed/RixukI_xPhY" frameborder="0" allowfullscreen></iframe></div>
+<h3 id="overview-1">Overview</h3>
+<p>Intergration is one key step of simulation. There are different types of integration techniques that have different effect on simulation speed and stability. For this project, I applied different integrators on the spring-mass cloth simulation implemented before and compared the difference.</p>
+<p><strong>Duration</strong>: 3 weeks</p>
+<p><strong>Role</strong>: Programmer</p>
+<p><strong>Team</strong>: Solo</p>
+<p><strong>Platform</strong>: OpenGL</p>
+<h3 id="techniques-1">Techniques</h3>
+<h4 id="explicit-euler">Explicit Euler</h4>
+<div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1"></a><span class="dt">void</span> Cloth::euler_step() {</span>
+<span id="cb7-2"><a href="#cb7-2"></a>    <span class="cf">for</span>(<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; pVector.size(); i++) {</span>
+<span id="cb7-3"><a href="#cb7-3"></a>        pVector[i]-&gt;<span class="va">m_Position</span> += dt * pVector[i]-&gt;<span class="va">m_Velocity</span>;</span>
+<span id="cb7-4"><a href="#cb7-4"></a>        pVector[i]-&gt;<span class="va">m_Velocity</span> = DAMP * pVector[i]-&gt;<span class="va">m_Velocity</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>          + dt * pVector[i]-&gt;<span class="va">m_ForceAccumulator</span> / pVector[i]-&gt;<span class="va">m_Mass</span>;</span>
+<span id="cb7-6"><a href="#cb7-6"></a>    }</span>
+<span id="cb7-7"><a href="#cb7-7"></a>}</span></code></pre></div>
+<h4 id="semi-implicit-euler-symplectic-euler">Semi-implicit Euler / Symplectic Euler</h4>
+<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1"></a><span class="dt">void</span> Cloth::symplectic_step() {</span>
+<span id="cb8-2"><a href="#cb8-2"></a>    <span class="cf">for</span>(<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; pVector.size(); i++) {</span>
+<span id="cb8-3"><a href="#cb8-3"></a>        pVector[i]-&gt;<span class="va">m_Velocity</span> = DAMP * pVector[i]-&gt;<span class="va">m_Velocity</span> + dt * pVector[i]-&gt;<span class="va">m_ForceAccumulator</span> / pVector[i]-&gt;<span class="va">m_Mass</span>;</span>
+<span id="cb8-4"><a href="#cb8-4"></a>        pVector[i]-&gt;<span class="va">m_Position</span> += dt * pVector[i]-&gt;<span class="va">m_Velocity</span>;</span>
+<span id="cb8-5"><a href="#cb8-5"></a>    }</span>
+<span id="cb8-6"><a href="#cb8-6"></a>}</span></code></pre></div>
+<h4 id="verlet">Verlet</h4>
+<div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="#cb9-1"></a><span class="dt">void</span> Cloth::verlet_step() {</span>
+<span id="cb9-2"><a href="#cb9-2"></a>    <span class="cf">for</span>(<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; pVector.size(); i++) {</span>
+<span id="cb9-3"><a href="#cb9-3"></a>        Vector3f temp = make_vector&lt;<span class="dt">float</span>&gt;(pVector[i]-&gt;<span class="va">m_Position</span>);</span>
+<span id="cb9-4"><a href="#cb9-4"></a>        pVector[i]-&gt;<span class="va">m_Position</span> = pVector[i]-&gt;<span class="va">m_Position</span> + DAMP * (pVector[i]-&gt;<span class="va">m_Position</span> - pVector[i]-&gt;<span class="va">m_PreviousPos</span>) + (pVector[i]-&gt;<span class="va">m_ForceAccumulator</span> / pVector[i]-&gt;<span class="va">m_Mass</span>) * dt * dt;</span>
+<span id="cb9-5"><a href="#cb9-5"></a>        pVector[i]-&gt;<span class="va">m_PreviousPos</span>  = temp;</span>
+<span id="cb9-6"><a href="#cb9-6"></a>    }</span>
+<span id="cb9-7"><a href="#cb9-7"></a>}</span></code></pre></div>
+<h4 id="rk4">RK4</h4>
+<p>https://gafferongames.com/post/integration_basics/</p>
+<h4 id="section"></h4>
+<h3 id="follow-up-1">Follow up</h3>
+<ul>
+<li>Implement implicit Euler method</li>
+</ul>
+<h2 id="motion-capture-editing">Motion Capture Editing</h2>
+<div class="video-container"><iframe src="//www.youtube.com/embed/vp-VpVOX4Bc" frameborder="0" allowfullscreen></iframe></div>
+<h3 id="overview-2">Overview</h3>
+<p>Very detailed motion data can be obtained from motion capture, after which motion edting and filtering is common and important. In this project, I created three kinds of edits of there walk cycles in ASF/AMC format, making exaggerting, damping and cartoon effects.</p>
+<p><strong>Duration</strong>: 3 weeks</p>
+<p><strong>Role</strong>: Programmer</p>
+<p><strong>Team</strong>: Solo</p>
+<p><strong>Platform</strong>: OpenGL</p>
+<h3 id="techniques-2">Techniques</h3>
+<h4 id="file-parsing">File parsing</h4>
+<p>The AMCViewer already provides all the functions that parse data from the ASF/AMC files. ASF file contains basic information of the skeleton, including mass, unit length, skeleton hierarchy, etc.</p>
+<pre><code>// mass, unit length, unit of angle 
+:units
+  mass 1.0
+  length 1.0
+  angle deg</code></pre>
+<pre><code>// info of root and the first element of the bone list
+// dof, position, orientation, etc
+:root
+   order TX TY TZ RX RY RZ
+   axis XYZ
+   position 0 0 0  
+   orientation 0 0 0 
+:bonedata
+  begin
+     id 1 
+     name lhipjoint
+     direction 0.678412 -0.646833 0.348374 
+     length 2.5146 
+     axis 0 0 0  XYZ
+  end
+...</code></pre>
+<pre><code>// hierarchy
+// the first one is the parent joint, the others are children joints that are attached to it
+:hierarchy
+  begin
+    root lhipjoint rhipjoint lowerback
+    lhipjoint lfemur
+    lfemur ltibia
+    ...
+  end</code></pre>
+<h4 id="data-retreiving">Data retreiving</h4>
+<p>The <code>Library::init()</code> function scans the given directory for AMC/ASF files and loads them into <code>data</code>, which is wrapped into classes like <code>Library::Motion</code>, <code>Character::Pose</code>, <code>Character::Angles</code>. The basic data retreiving process is shown as the following.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="#cb13-1"></a><span class="cf">for</span> (<span class="dt">int</span> index = <span class="dv">0</span>; index &lt; Library::motion_count(); index++) {</span>
+<span id="cb13-2"><a href="#cb13-2"></a>    <span class="co">// Retreive all the motion from the file</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>    Motion &amp; motion = Library::motion_nonconst(index);</span>
+<span id="cb13-4"><a href="#cb13-4"></a>    <span class="cf">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; motion.frames(); j++) {</span>
+<span id="cb13-5"><a href="#cb13-5"></a>        Character::Pose pose;</span>
+<span id="cb13-6"><a href="#cb13-6"></a>        Character::Angles angles;</span>
+<span id="cb13-7"><a href="#cb13-7"></a></span>
+<span id="cb13-8"><a href="#cb13-8"></a>        <span class="co">// Retreive pose and angle data</span></span>
+<span id="cb13-9"><a href="#cb13-9"></a>        motion.get_pose(j, pose);</span>
+<span id="cb13-10"><a href="#cb13-10"></a>        pose.to_angles(angles);</span>
+<span id="cb13-11"><a href="#cb13-11"></a></span>
+<span id="cb13-12"><a href="#cb13-12"></a>        <span class="co">// Calculate new angles by applying some motion filters</span></span>
+<span id="cb13-13"><a href="#cb13-13"></a>        Character::Angles new_angles = Character::Angles(angles);</span>
+<span id="cb13-14"><a href="#cb13-14"></a>        <span class="co">// ...</span></span>
+<span id="cb13-15"><a href="#cb13-15"></a></span>
+<span id="cb13-16"><a href="#cb13-16"></a>        <span class="co">// Set new values to the angles</span></span>
+<span id="cb13-17"><a href="#cb13-17"></a>        motion.set_angles(j, new_angles);</span>
+<span id="cb13-18"><a href="#cb13-18"></a>    }</span>
+<span id="cb13-19"><a href="#cb13-19"></a>}</span></code></pre></div>
+<h4 id="motion-filter">Motion Filter</h4>
+<p>I implemented three kinds of motion filters - scalar filter, Gaussian filter and cartoon filter (which seems to have some problem and doesn’t work).</p>
+<ul>
+<li><p>Scalar</p>
+<p>Scalar exaggeration can be considered as a filter where only the middle number is non-zero. As shown in the video, scalar filter usually exaggerate the motion when the amplitude is greater than 1.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode c++"><code class="sourceCode cpp"><span id="cb14-1"><a href="#cb14-1"></a>vector&lt;<span class="dt">double</span>&gt; create_scalar_filter(<span class="dt">int</span> radius, <span class="dt">double</span> sigma) {</span>
+<span id="cb14-2"><a href="#cb14-2"></a>    vector&lt;<span class="dt">double</span>&gt; filter;</span>
+<span id="cb14-3"><a href="#cb14-3"></a>    <span class="cf">for</span> (<span class="dt">int</span> x = -radius; x &lt;= radius; x++) {</span>
+<span id="cb14-4"><a href="#cb14-4"></a>        <span class="cf">if</span> (x == <span class="dv">0</span>) filter.push_back(<span class="fl">1.25</span>);</span>
+<span id="cb14-5"><a href="#cb14-5"></a>        <span class="cf">else</span> filter.push_back(<span class="dv">0</span>);</span>
+<span id="cb14-6"><a href="#cb14-6"></a>    }</span>
+<span id="cb14-7"><a href="#cb14-7"></a>    <span class="cf">return</span> filter;</span>
+<span id="cb14-8"><a href="#cb14-8"></a>}</span></code></pre></div></li>
+<li><p>Gaussian filter</p>
+<p>Just like Gaussian filter in the image processing area, Gaussian motion filter provides a damping effect on the motion and <code>sigma</code> controls the degree of the effect. For example, when <code>sigma</code> is 5, visible damping effect can be seen; when it is 50, the whole model almost turns to the original pose.</p>
+<p><img src="/Project-9/gaussian.png"></p></li>
+<li><p>Cartoon filter</p>
+<p>I haven’t figured out yet why this filter works very much like the Gaussian filter. I guess I misunderstand the use of LOG filter. The current filter is simply the second derivative of the Gaussian filter.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="#cb15-1"></a>vector&lt;<span class="dt">double</span>&gt; create_cartoon_filter(<span class="dt">int</span> radius, <span class="dt">double</span> sigma) {</span>
+<span id="cb15-2"><a href="#cb15-2"></a>    vector&lt;<span class="dt">double</span>&gt; filter;</span>
+<span id="cb15-3"><a href="#cb15-3"></a>    <span class="cf">for</span> (<span class="dt">int</span> x = -radius; x &lt;= radius; x++) {</span>
+<span id="cb15-4"><a href="#cb15-4"></a>        <span class="dt">double</span> g = <span class="dv">1</span> / (M_PI * pow(sigma, <span class="dv">4</span>)) * (<span class="dv">1</span> - x * x / (<span class="dv">2</span> * sigma * sigma)) * pow(M_E, -x * x / (<span class="dv">2</span> * sigma * sigma));</span>
+<span id="cb15-5"><a href="#cb15-5"></a>        filter.push_back(g);</span>
+<span id="cb15-6"><a href="#cb15-6"></a>    }</span>
+<span id="cb15-7"><a href="#cb15-7"></a></span>
+<span id="cb15-8"><a href="#cb15-8"></a>  <span class="cf">return</span> filter;</span>
+<span id="cb15-9"><a href="#cb15-9"></a>}</span></code></pre></div></li>
+</ul>
+<h3 id="follow-up-2">Follow up</h3>
+<ul>
+<li>Bad cartoon filter effects</li>
+</ul>
+<h2 id="ccd-ik-and-fabrik">CCD IK and FABRIK</h2>
+<div class="video-container"><iframe src="//www.youtube.com/embed/kNO2yru0e9s" frameborder="0" allowfullscreen></iframe></div>
+<h3 id="overview-3">Overview</h3>
+<p>CCD IK and FABRIK are two approaches to implement IK. For this mini project, I created a Unity project where CCD and FABRIK are applied to a very simple skeleton. The main purpose is to go through the basic process of implementing IK.</p>
+<p><strong>Duration</strong>: 3 weeks</p>
+<p><strong>Role</strong>: Programmer</p>
+<p><strong>Team</strong>: Solo</p>
+<p><strong>Platform</strong>: Unity</p>
+<h3 id="techniques-3">Techniques</h3>
+<h4 id="unity">Unity</h4>
+<p>I considered Unity as the first choice because it provides very detailed and established interfaces for manipulating position and rotation of objects and implementing interactive interface.</p>
+<p>For example, by directly controlling <code>transform.position</code> field of an <code>gameObject</code>, I can modify positions of joints and by mutiplying on <code>transform.rotation</code> , which is a <code>Quanternion</code>, rotations can be applied to bones.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode c#"><code class="sourceCode cs"><span id="cb16-1"><a href="#cb16-1"></a><span class="kw">public</span> <span class="dt">void</span> <span class="fu">SetPositionAndRotation</span> (Vector3 tipOrigin, Vector3 tipTarget, Vector3 rootTarget) {</span>
+<span id="cb16-2"><a href="#cb16-2"></a>    bone.<span class="fu">transform</span>.<span class="fu">position</span> = (tipTarget + rootTarget) / <span class="dv">2</span>;</span>
+<span id="cb16-3"><a href="#cb16-3"></a>        </span>
+<span id="cb16-4"><a href="#cb16-4"></a>    Quaternion rotation = Quaternion.<span class="fu">FromToRotation</span> (</span>
+<span id="cb16-5"><a href="#cb16-5"></a>        tipOrigin - rootTarget,</span>
+<span id="cb16-6"><a href="#cb16-6"></a>        tipTarget - rootTarget</span>
+<span id="cb16-7"><a href="#cb16-7"></a>    );</span>
+<span id="cb16-8"><a href="#cb16-8"></a>    bone.<span class="fu">transform</span>.<span class="fu">rotation</span> = bone.<span class="fu">transform</span>.<span class="fu">rotation</span> * rotation;</span>
+<span id="cb16-9"><a href="#cb16-9"></a>}</span></code></pre></div>
+<p>As for user input, although Unity has a class <code>Input</code> handling common inputs like keyboard and mouse, I simply utilized Unity Scene View.</p>
+<p><img src="/Project-9/input.png"></p>
+<p>Also, Unity provides a hierarchy of objects, so that I don’t need to calculate position for every part of a bone. Instead, I can simply calculate the position and rotation of the parent object and detail parts will change automatically.</p>
+<p><img src="/Project-9/hierarchy.png"></p>
+<h4 id="ccd-ik">CCD IK</h4>
+<h4 id="fabrik">FABRIK</h4>
+<h3 id="follow-up-3">Follow up</h3>
+<ul>
+<li><p>Jacobian IK</p>
+<p>CCD IK and FABRIK are in some way similar. The main idea of both two approaches is to interatively modify the joints until reaching the error threshold. On the other hand, Jacobian methods are relatively based on math and calculation. With the help of an established math library, Jacobian IK is also not difficult to implement.</p></li>
+<li><p>Maya</p>
+<p>Implementing IK in Maya by making some tools might be very meaningful.</p></li>
+</ul>
+<h4 id="section-1"></h4>
+
+        </div>
+    </article>
+</section>
+
+    <!-- Footer -->
+    <footer id="sec-foot">
+    <nav>
+        
+    <a href="/">Home</a>
+
+    <a href="/about">About</a>
+
+    <a href="/tags/blog">Blog</a>
+
+    <a href="/#sec-project">Projects</a>
+
+<!-- <a href="/#sec-project">Projects</a> -->
+<!-- <a><strong>Technical Artist</strong></a> -->
+<!-- <a><strong>Gameplay Engineer</strong></a> -->
+    </nav>
+    <div>
+        Contact Me | <a href="mailto:rongjial@andrew.cmu.edu">rongjial@andrew.cmu.edu</a>
+        <div>
+            <a class="pic" href="https://github.com/EricLee12138"><img src="/images/github.png"></a>
+            <a class="pic" href="http://www.etc.cmu.edu/blog/author/rongjial/"><img src="/images/etc.png"></a>
+            <a class="pic" href="https://www.linkedin.com/in/rongjia-li-81357919a/"><img src="/images/linkedin.png"></a>
+            <a class="pic" href="https://www.facebook.com/profile.php?id=100011859092628"><img src="/images/facebook.png"></a>
+        </div>
+    </div>
+</footer>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+
+</html>

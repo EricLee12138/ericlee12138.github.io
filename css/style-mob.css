@@ -1,0 +1,114 @@
+@media screen and (max-width: 481px){
+    h1 {
+        font-size: 65pt;
+    }
+    h2 {
+        font-size: 17pt;
+    }
+    #nav-head #nav-menu {
+        position: absolute;
+        width: 100%;;
+        height: 0;
+        padding: 0 5%;
+        transition: all .3s;
+        overflow: hidden;
+        background-color: #414141;
+    }
+    #nav-head #nav-menu.open {
+        height: 180px;
+    }
+    #nav-head #nav-menu-btn {
+        position: absolute;
+        right: 0;
+        display: block;
+        width: 30px;
+        height: fit-content;
+        margin: 10px;
+        z-index: 10;
+    }
+    #nav-head #nav-menu-btn a {
+        padding: 0;
+    }
+    #nav-head #nav-menu-btn img {
+        width: 80%;
+    }
+    #nav-head #nav-menu-btn.open img {
+        filter: invert(0.5) brightness(5);
+    }
+    #nav-head div a {
+        display: block;
+        line-height: 25px;
+        padding: 14px 0 0 0;
+        font-weight: 500;
+        margin: 0;
+        color: #ccc;
+        clear: both;
+    }
+    #nav-head h1 {
+        height: 60%;
+        line-height: 65px;
+        clear: both;
+    }
+    #nav-head h2 {
+    }
+    #nav-head #post-meta {
+        clear: both;
+        width: 90%;
+        height: fit-content;
+        margin: 30px 5%;
+    }
+    #nav-head #post-img {
+        margin: 0 0 20px !important;
+        clear: both;
+        box-shadow: none;
+    }
+
+    #sec-profile h3 {
+        font-size: 17pt;
+        line-height: 40px;
+    }
+
+    #sec-blog, #sec-project {
+        margin: 0;
+        width: 100%;
+    }
+    #sec-blog article, #sec-project article {
+        height: 400px;
+        margin: 5px 0;
+    }
+    .atc-small {
+        width: calc(100%);
+    }
+    #sec-blog article > a img, #sec-project article > a img {
+    }
+
+    #sec-foot nav {
+        display: none;
+    }
+
+    #nav-head #post-meta h1 {
+        font-size: 30pt;
+        line-height: 50px;
+    }
+
+    #sec-post {
+        width: 90%;
+        margin: 0 5% 20px;
+    }
+    
+    #post-content p, #post-content ul, #post-content ol {
+        line-height: 35px;
+    }
+    #post-content h2 {
+        font-size: 20pt;
+        margin: 15px 0 10px;
+    }
+    #sec-post #post-content .hljs {
+        white-space: nowrap;
+    }
+    #sec-post #post-content .hljs ul {
+        line-height: 25px;
+
+    }
+
+}

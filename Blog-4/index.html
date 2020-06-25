@@ -1,0 +1,158 @@
+<html>
+<!-- Head -->
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    
+    <title>ERICube</title>
+
+    <link rel="shortcut icon" href="/images/ericube.svg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style-mob.css">
+    <link rel="stylesheet" href="/css/hljs.css">
+
+    <script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+
+    <script src="/js/vendor/three.js"></script>
+    <script src="/js/vendor/jquery.min.js"></script>
+    <script src="/js/vendor/hljs.js"></script>
+    <script src="/js/vendor/OrbitControls.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+    
+    <script type="text/javascript" src="/js/src/index.js"></script>
+    <script type="text/javascript" src="/js/src/cube-head.js"></script>
+
+    
+    <link rel="stylesheet" href="/css/post.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigator -->
+    <nav id="nav-head">
+    <div id="nav-menu-btn">
+        <a href="/"><img src="/images/ericube.svg"></a>
+    </div>
+    
+    <div id="nav-menu">
+        
+    <a href="/">Home</a>
+
+    <a href="/about">About</a>
+
+    <a href="/tags/blog">Blog</a>
+
+    <a href="/#sec-project">Projects</a>
+
+<!-- <a href="/#sec-project">Projects</a> -->
+<!-- <a><strong>Technical Artist</strong></a> -->
+<!-- <a><strong>Gameplay Engineer</strong></a> -->
+    </div>
+    
+
+    
+    <div id="post-meta">
+        <div>
+            <h2>blog</h2>
+            <h1>Technical Animation Blogs</h1>
+            
+                <p class="tag">Technical Animation</p>
+            
+                <p class="tag">Technical Artist</p>
+            
+        </div>
+    </div>
+    <div id="post-img">
+        <img class="img-responsive" src="https://tva1.sinaimg.cn/large/006tNbRwgy1gaxoydlyqfj31400p00vx.jpg">
+    </div>
+    
+</nav>
+
+    <!-- Body -->
+    <section id="sec-post">
+    <article id="atc-post">
+        <div id="post-content">
+            <h2 id="course-intro-jan-13">Course Intro [Jan 13]</h2>
+<p>Like what I said when I was introducing myself, I am struggling because I am not sure what I want to do in the future. My background was in Software Engineering, where I found game development is interesting. I came across the concept of technical art one year before coming to the Entertainment Technology Center in CMU, which appears fascinating and appealing to me. I am rather familiar with programming, at the same time, I do have basic knowledge of 3D art, including modeling, rigging, and animation. So the combination of technology and art looks just perfect for me. However, I only have two years in CMU, so I have to figure out what I want to do more or what is more suitable for me, and how I can achieve the goal and get into the game industry. After talking to some alumni and seniors (thanks to ETC West Coast Trip), I finally make up my mind and decide to try taking Technical Animation. Going through the syllabus of the course, I find a lot of topics exciting, like IK, rigging and skinning, cloth and fluid simulation, etc., which I also believe is helpful to my future career. One thing that I am not sure about is how I can make good use of the course project and do some work the way an actual tech artist works. After all, my goal of taking the course is to get myself a job, and only by practicing and doing projects can help me build my skillset.</p>
+<h2 id="techniques-for-creating-animation-jan-15">Techniques for Creating Animation [Jan 15]</h2>
+<p>Keyframing, procedural animation, data-driven animation, and physics-based animation are the most common techniques for creating animation. For me, keyframing is the one that I am most familiar with and interested in. Generally, keyframing animation can be done by setting up basic key poses and then in-between frames. What I feel very much interesting is that we can change the way the animation looks like by modifying some related parameters, for example, the emotion and status of a walking human model. Although completely simulating a human with emotion is impossible because of the subtleness and unpredictability, manipulation of several parameters can already affect greatly on the model. What I am concerned about is how we can find the parameters related to one aspect of the model’s appearance.</p>
+<h2 id="motion-capture-jan-22">Motion Capture [Jan 22]</h2>
+<p>Motion capture is important in a lot of fields and industries. So far I have visited motion capture studios from Activision and Carnegie Mellon University. Activision motion capture studio is much larger and has more than a hundred advanced motion capture cameras as well as facial capture devices. While the one on campus is more focusing on research and study.</p>
+<p>Personally, I am very interested in motion capture and would love to learn about it. Also, I have a lot of questions in terms of how the whole process is working and how it can help us. For example:</p>
+<ul>
+<li>Are there any identifiers that stand for those dots on the costume? If so do we need to remember their specific position? If they are basically the same, how does the camera match the dots with different parts of a body?</li>
+<li>Among all those dots that camera captures, is there any structure or hierarchy?</li>
+<li>Before exporting, can we modify the animation manually in the motion capture software and how?</li>
+<li>After exporting, can animators modify the animation in other software?</li>
+</ul>
+<p>Since the studio is open to students, I prefer to give it a try and do some motion capture projects and figure out the answers by myself.</p>
+<h2 id="inverse-kinematics-i-jan-27">Inverse Kinematics I [Jan 27]</h2>
+<p>Understanding IK is relatively easier that making an actual implementation. To further understand IK, there are at least two follow-up tasks. One is figuring out how people come up with several alternatives to pseudo inverse and the respective pros and cons. The other is to think of how to implement IK, either by making a tool or doing some research to find how current 3D softwares like Maya and 3DMax using IK.</p>
+<p>Another similar concept I learned from Maya is FK, i.e. Forward Kinematics. Learning about the difference can be interesting.</p>
+<h2 id="inverse-kinematics-ii-jan-29">Inverse Kinematics II [Jan 29]</h2>
+<p>Basic Jacobian IK works pretty well on common skeletons, but usually has a great cost on performance. So a lot of new techniques are come up with to make Jacobian IK faster and feasible to run in real-time, like Parallel IK, which can perform IK in a multithreaded way.</p>
+<p>On the other hand, some techniques are similar to CCD, aiming to deal with scenarios that CCD can not handle. For example, the iterative process that FABRIK performs looks very much like CCD but performs well on complicated skeletons.</p>
+<p>Mesh-based IK is different and very interesting because it doesn’t require any skeleton, which might greatly reduce animators’ work and therefore has huge potential.</p>
+<h2 id="motion-editing-feb-3">Motion Editing [Feb 3]</h2>
+<p>I am very interested in the pre-computed search tree. The main idea that converting the state machine to a search tree might be well used in games since the state machine is a very common concept. Also, the animation is real-time interactive, which reminds me of one of my previous projects where I was trying to find the fire evacuation path for people in different positions. Besides the fixed obstacles on the floor that can be avoided by precomputing, moving people in real-time should also be considered as obstacles. The interactive algorithm in the paper may be able to handle the situation very well.</p>
+<h2 id="motion-editing-ii-feb-5">Motion Editing II [Feb 5]</h2>
+<p>The sketch-based motion editing and cartoon style motion amplifier works really fine and the interaction looks pretty intuitive. And in 2018 there was a paper implementing a spline interface for skinning weight editing. But there are some obstacles that keep these ideas from being actually used in real industry. For now, what we talked about in class does not make a lot of sense to me. So I want to have an opportunity to implement part of the ideas and try to figure it out by myself. Maybe I should consider about doing it for the final project if that’s possible.</p>
+<h2 id="rigging-and-skinning-feb-10">Rigging and Skinning [Feb 10]</h2>
+<h2 id="cloth-simulation-feb-19">Cloth Simulation [Feb 19]</h2>
+<h2 id="cloth-simulation-ii-feb-24">Cloth Simulation II [Feb 24]</h2>
+<h2 id="rigid-bodies-and-contact-feb-26">Rigid Bodies and Contact [Feb 26]</h2>
+
+        </div>
+    </article>
+</section>
+
+    <!-- Footer -->
+    <footer id="sec-foot">
+    <nav>
+        
+    <a href="/">Home</a>
+
+    <a href="/about">About</a>
+
+    <a href="/tags/blog">Blog</a>
+
+    <a href="/#sec-project">Projects</a>
+
+<!-- <a href="/#sec-project">Projects</a> -->
+<!-- <a><strong>Technical Artist</strong></a> -->
+<!-- <a><strong>Gameplay Engineer</strong></a> -->
+    </nav>
+    <div>
+        Contact Me | <a href="mailto:rongjial@andrew.cmu.edu">rongjial@andrew.cmu.edu</a>
+        <div>
+            <a class="pic" href="https://github.com/EricLee12138"><img src="/images/github.png"></a>
+            <a class="pic" href="http://www.etc.cmu.edu/blog/author/rongjial/"><img src="/images/etc.png"></a>
+            <a class="pic" href="https://www.linkedin.com/in/rongjia-li-81357919a/"><img src="/images/linkedin.png"></a>
+            <a class="pic" href="https://www.facebook.com/profile.php?id=100011859092628"><img src="/images/facebook.png"></a>
+        </div>
+    </div>
+</footer>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+
+</html>

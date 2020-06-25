@@ -1,0 +1,84 @@
+#post-content code {
+    font-family: "SF Mono";
+    font-size: 10pt;
+}
+#post-content .hljs {
+    display: block;
+    overflow-x: auto;
+    color: #333;
+    background: #ffffff66;
+    border: 1px solid #bbb;
+    margin: 25px 0;
+    padding: 0.5em;
+    border-radius: 5px;
+    white-space: pre-wrap;
+}
+#post-content .hljs-comment,#post-content .hljs-quote {
+    color: #998;
+    font-style: italic
+}
+#post-content .hljs-keyword,#post-content .hljs-selector-tag,#post-content .hljs-subst {
+    color: #9C27B0;
+}
+#post-content .hljs-number,#post-content .hljs-literal,#post-content .hljs-variable,#post-content .hljs-template-variable,#post-content .hljs-tag #post-content .hljs-attr {
+    color: #008080
+}
+#post-content .hljs-string,#post-content .hljs-doctag {
+    color: #d14
+}
+#post-content .hljs-title,#post-content .hljs-section,#post-content .hljs-selector-id {
+    color: #900;
+}
+#post-content .hljs-subst {
+    font-weight: normal
+}
+#post-content .hljs-type,#post-content .hljs-class #post-content .hljs-title {
+    color: #458;
+}
+#post-content .hljs-tag,#post-content .hljs-name,#post-content .hljs-attribute {
+    color: #000080;
+    font-weight: normal
+}
+#post-content .hljs-regexp,#post-content .hljs-link {
+    color: #009926
+}
+#post-content .hljs-symbol,#post-content .hljs-bullet {
+    color: #990073
+}
+#post-content .hljs-built_in,#post-content .hljs-builtin-name {
+    color: #0086b3
+}
+#post-content .hljs-meta {
+    color: #999;
+}
+#post-content .hljs-deletion {
+    background: #fdd
+}
+#post-content .hljs-addition {
+    background: #dfd
+}
+#post-content .hljs-emphasis {
+    font-style: italic
+}
+#post-content .hljs ul {
+    font-family: "SF mono";
+    font-size: inherit;
+    line-height: 18px;
+    color: #aaa;
+    counter-reset: item;
+    list-style-type: none;
+    padding-left: 10px;
+}
+#post-content .hljs ul li {
+    word-break: break-all;
+    word-wrap: break-word;
+    color: #333;
+}
+#post-content .hljs ul li:before { 
+    content: counter(item); 
+    counter-increment: item;
+    color: #aaa;
+    float: left;
+    clear: both;
+    width: 30px;
+}

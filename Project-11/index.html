@@ -1,0 +1,241 @@
+<html>
+<!-- Head -->
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    
+    <title>ERICube</title>
+
+    <link rel="shortcut icon" href="/images/ericube.svg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style-mob.css">
+    <link rel="stylesheet" href="/css/hljs.css">
+
+    <script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+
+    <script src="/js/vendor/three.js"></script>
+    <script src="/js/vendor/jquery.min.js"></script>
+    <script src="/js/vendor/hljs.js"></script>
+    <script src="/js/vendor/OrbitControls.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+    
+    <script type="text/javascript" src="/js/src/index.js"></script>
+    <script type="text/javascript" src="/js/src/cube-head.js"></script>
+
+    
+    <link rel="stylesheet" href="/css/post.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigator -->
+    <nav id="nav-head">
+    <div id="nav-menu-btn">
+        <a href="/"><img src="/images/ericube.svg"></a>
+    </div>
+    
+    <div id="nav-menu">
+        
+    <a href="/">Home</a>
+
+    <a href="/about">About</a>
+
+    <a href="/tags/blog">Blog</a>
+
+    <a href="/#sec-project">Projects</a>
+
+<!-- <a href="/#sec-project">Projects</a> -->
+<!-- <a><strong>Technical Artist</strong></a> -->
+<!-- <a><strong>Gameplay Engineer</strong></a> -->
+    </div>
+    
+
+    
+    <div id="post-meta">
+        <div>
+            <h2>project</h2>
+            <h1>Spline Interface for Intuitive Skinning Weight Editing</h1>
+            
+                <p class="tag">Maya</p>
+            
+                <p class="tag">Skinning Weight</p>
+            
+                <p class="tag">Spline</p>
+            
+        </div>
+    </div>
+    <div id="post-img">
+        <img class="img-responsive" src="/Project-11/spline.png">
+    </div>
+    
+</nav>
+
+    <!-- Body -->
+    <section id="sec-post">
+    <article id="atc-post">
+        <div id="post-content">
+            <h2 id="overview">Overview</h2>
+<p>The project is aimed at designing and implementing a prototypical spline interface for skinning weights editing, which is inspired by <a href="https://www.notion.so/Final-Project-Report-d4810c392f3f476b8de7376ab5d62777#e4ddb388b2174ff3b6147594a9ddc2d7" target="_blank" rel="noopener">the paper</a> <em>Spline Interface for Weights Editing</em> and more intuitive and easier to use than common paint-based interfaces.</p>
+<p>Specifically, the interface will be implemented in Maya using Maya plug-in APIs.</p>
+<p><strong>Duration</strong>: 2 weeks</p>
+<p><strong>Role</strong>: Programmer</p>
+<p><strong>Team</strong>: Solo</p>
+<p><strong>Platform</strong>: Maya, C++</p>
+<h2 id="techniques">Techniques</h2>
+<p>The interface has three main parts.</p>
+<p>The first part retrieves data from the original mesh and joints, namely the mesh verticies (MVs) and skinning weights. The second part allows users to create splines and specify the spline values. The third part uses original skinning weights, user defined splines and spline values as input and generate new weight values and set them back to the mesh and joints.</p>
+<h3 id="retrieve-original-data">Retrieve original data</h3>
+<p>As metioned before, original data of the mesh and joints are needed by the later steps.</p>
+<p>First, the current interface requires MVs for users to create splines. On the one hand, the interface should provide a way to select some vertices as control vertices (CVs). On the other hand, the interface has to know the actual position of each MV for B-spline generation. Maya has public class <code>MSelectionList</code> for making selection and <code>MItMeshVertex</code> for interating among the selected MVs.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">// Global selection list</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>MSelectionList selectionList;</span>
+<span id="cb1-3"><a href="#cb1-3"></a>MGlobal::getActiveSelectionList(selectionList);</span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co">// DAG path and component</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>MDagPath dagPath;</span>
+<span id="cb1-7"><a href="#cb1-7"></a>MObject component;</span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="co">// DAG path and component of selected mesh</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>selectionList.getDagPath(<span class="dv">0</span>, dagPath, component);</span>
+<span id="cb1-11"><a href="#cb1-11"></a></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="co">// Mesh vertex iterator</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>MItMeshVertex vertexIt(dagPath, component);</span></code></pre></div>
+<p>Second, the interface retrieves and stores the original skinning weights for the future use when calculating new weights. Similarly, interface should provide a way for selection of the specific mesh and joints before getting the actual weights. Maya uses public class <code>MFnSkinCluster</code> to retrieve skinning related data.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">// Global selection list</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>MSelectionList selectionList;</span>
+<span id="cb2-3"><a href="#cb2-3"></a>MGlobal::getActiveSelectionList(selectionList);</span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co">// DAG paths and components of selected joint and mesh</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>MDagPath jointDagPath, meshDagPath;</span>
+<span id="cb2-7"><a href="#cb2-7"></a>MObject jointComponent, meshComponent;</span>
+<span id="cb2-8"><a href="#cb2-8"></a>    </span>
+<span id="cb2-9"><a href="#cb2-9"></a>selectionList.getDagPath(<span class="dv">0</span>, jointDagPath, jointComponent);</span>
+<span id="cb2-10"><a href="#cb2-10"></a>selectionList.getDagPath(<span class="dv">1</span>, meshDagPath, meshComponent);</span>
+<span id="cb2-11"><a href="#cb2-11"></a></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="co">// ...</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="co">// Skin cluster</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a>MItDependencyNodes iter(MFn::kSkinClusterFilter);</span>
+<span id="cb2-16"><a href="#cb2-16"></a>MFnSkinCluster skinCluster(iter.thisNode());</span></code></pre></div>
+<h3 id="create-splines">Create splines</h3>
+<p>The original paper uses the standard cubic B-spline model, which is widely used for its smoothness and local controllability. In Euclidean space, a B-spline curve is defined as a weighted sum of B-spline basis functions. Given a set of anchor points, a B-spline curve is given by:</p>
+<p><span class="math display">\[s(u)=\sum_{i=0}^{n-1}c_i^pR_{i,r}(u)\]</span></p>
+<p>There are plenty ways to create B-splines since it’s already a very common used model. Maya has its own APIs for creating B-splines as well, wrapped in the public class <code>MFnNurbsCurve</code>.</p>
+<p>The only thing that should be concerned about is the form of the spline and how to specify the required parameters. The spline should be working correctly as long as it’s closed, however, to make the visualization better, we applied a more restrictive form, a periodic form.</p>
+<p>Maya’s non-uniform rational B-spline (NURBS) curve is defined by an array of CVs, an array of knot values, a degree and a form, which is already decided to be a periodic form.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">// Spline constants</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="at">const</span> <span class="dt">unsigned</span> deg = <span class="dv">3</span>;</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="at">const</span> <span class="dt">unsigned</span> nspans = vertexIt.count() / splineNumber;</span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="at">const</span> <span class="dt">unsigned</span> ncvs = nspans + deg;</span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="at">const</span> <span class="dt">unsigned</span> nknots = nspans + <span class="dv">2</span> * deg - <span class="dv">1</span>;</span></code></pre></div>
+<p>After defining and calculating all the required parameters, the spline can be easily created by calling the <code>create</code> method:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">// Control vertices and knots used to create splines</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>MPointArray controlVertices;</span>
+<span id="cb4-3"><a href="#cb4-3"></a>MDoubleArray knotSequences;</span>
+<span id="cb4-4"><a href="#cb4-4"></a></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co">// Create periodic spline</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a>MFnNurbsCurve curve;</span>
+<span id="cb4-7"><a href="#cb4-7"></a>curve.create(controlVertices, knotSequences, deg,</span>
+<span id="cb4-8"><a href="#cb4-8"></a>            MFnNurbsCurve::kPeriodic, <span class="kw">false</span>, <span class="kw">false</span>, MObject::kNullObj, &amp;status);</span></code></pre></div>
+<p>The spline values are relatively easy to get since they are purely an array of floating numbers. Users can simply specify them in the command.</p>
+<h3 id="calculate-weights">Calculate weights</h3>
+<p>With splines and spline values specified and original weights retrieved and stored, we can calculate the new weights and set them back to the mesh and joints. The original paper has introduced several methods of weight conputation, including interpolation-based method, diffusion flow method and hybrid method. In this project, interpolation-based method with Laplacian operator is applied.</p>
+<p>According to the paper, the problem can be formulated within a surface with the linear equality constraint of splines:</p>
+<p><span class="math display">\[w^s=\arg\min_x x^TQx\ \text{  subject to  }Ax=s^i\]</span></p>
+<p>After the simplification, the mesh is a simple polygon cylinder, the splines can be considered as a set of MVs, and the original weights can be considered as simply a 2D array of floating numbers. What’s more, the MVs and weights can be easily associated with indices. Therefore, the weight interpolation can be simplified as a 2D image filtering problem, which can be solved by Laplacian interpolation. <a href="http://numerical.recipes" target="_blank" rel="noopener">The book</a> <em>Numerical Recipes 3rd Edition: The Art of Scientific Computing</em> has given a very detailed explanation and open-sourced implementation.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1"></a>MatDoub matrix = NRmatrix&lt;<span class="dt">double</span>&gt;(<span class="dv">49</span>, <span class="dv">40</span>, weights);</span>
+<span id="cb5-2"><a href="#cb5-2"></a>Laplace_interp interp(matrix);</span>
+<span id="cb5-3"><a href="#cb5-3"></a></span>
+<span id="cb5-4"><a href="#cb5-4"></a>interp.solve();</span>
+<span id="cb5-5"><a href="#cb5-5"></a>newJointWeights.clear();</span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; interp.mat.nrows(); i++) {</span>
+<span id="cb5-7"><a href="#cb5-7"></a>    <span class="cf">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; interp.mat.ncols(); j++) {</span>
+<span id="cb5-8"><a href="#cb5-8"></a>        newJointWeights.append(interp.mat[i][j]);</span>
+<span id="cb5-9"><a href="#cb5-9"></a>    }</span>
+<span id="cb5-10"><a href="#cb5-10"></a>}</span></code></pre></div>
+<h2 id="results">Results</h2>
+<h3 id="create-splines-1">Create splines</h3>
+<p><img src="/Project-11/result0.png" style="float:left;width:48%;margin-right:2%;"> <img src="/Project-11/result1.png" style="float:left;width:48%;margin-left:2%;"></p>
+<h3 id="calculate-weights-1">Calculate weights</h3>
+<p><img src="/Project-11/result2.png" style="float:left;width:48%;margin-right:2%;"> <img src="/Project-11/result3.png" style="float:left;width:48%;margin-left:2%;"></p>
+<h3 id="demo-video">Demo video</h3>
+<div class="video-container"><iframe src="//www.youtube.com/embed/nWryvhC41Oo" frameborder="0" allowfullscreen></iframe></div>
+<h2 id="follow-up">Follow-up</h2>
+<h3 id="more-complicated-models-and-meshes">More complicated models and meshes</h3>
+<p>Maya has its own rules of interating among all the MVs. The interface now only supports polygon cylinders or meshes that are deformed from polygon cylinders, because the current algorithm hasn’t considered the order of the MVs. It now doesn’t affect the weight calculation part so the weight values can be computed correctly. But the splines are not correctly generated.</p>
+<p>Therefore, to support more complicated models and meshes, the actual world position of each MV should be considered so as to know the order of the MVs when generating splines.</p>
+<h3 id="more-delicate-user-interface">More delicate user interface</h3>
+<p>One of the reasons why the original paper is very impressive is because the intuitive interface and the user experience can save users a lot of time compared to paint-based interfaces. The interface in this project is mainly focusing on implemeting the algorithm process, so the interface can hardly be considered effective and intuitive.</p>
+<p>Therefore, to actually help artists and animators reduce their work, more delicate and intuitove user interface should be created.</p>
+<h3 id="spline-editing">Spline editing</h3>
+<p>Similar to friendly interface, spline editing makes no difference in terms of the algorithm itself, but it is one of the factors that make the interface very easy to use and can be possibly used in real production.</p>
+<h3 id="spline-on-mesh-surface">Spline on mesh surface</h3>
+<p>In this project, the splines are generated using MVs as CVs, so they are in fact inside the mesh, which has to be changed when adding spline editing to the interface. The original paper uses Phong Projection to project the spline to the surface, which is a very important step.</p>
+<h3 id="weight-computation">Weight computation</h3>
+<p>As mentioned before, the original has applied multiple weight computation methods for better performance and effect. For example, interpolation-based methods are good at distributing values for the area between two iso-values, while the diffusion flow method is a better choice to calculatng weights for the rest of the area. Besides, even just for interpolation-based methods, different operators or energy can have different performance and results.</p>
+<p>Therefore, to improve the interface, a lot of different methods should be applied, compared and optimized, if necessary.</p>
+<h3 id="weight-freezing">Weight freezing</h3>
+<p>Mostly, the skinning weights will be edited and modified for several times. So one thing the interface should do is to maintain the weights of the current joint when modifying those of the next joint, which is also addressed by the original paper. For the current interface, it should be easy to do by simply storing all the modified weights and setting them back the mesh when all edits are done.</p>
+<h2 id="references">References</h2>
+<h3 id="original-paper">Original Paper</h3>
+<p>Go to the original paper <em>Spline Interface for Weights Editing</em> by SEUNGBAE BANG and SUNG-HEE LEE, Korea Advanced Institute of Science and Technology via <a href="http://motionlab.kaist.ac.kr/?page_id=5457" target="_blank" rel="noopener">this link</a>.</p>
+<h3 id="math-library">Math library</h3>
+<p>Maya provides a <a href="https://help.autodesk.com/cloudhelp/2020/ENU/Maya-SDK-MERGED/cpp_ref/index.html" target="_blank" rel="noopener">reference</a> for detailed documentation of the classes, methods, types and constants provided by the Maya API along with cross-linked source for the code samples provided in the Maya Development Kit.</p>
+<p>The enterprise of the book provides a very profession <a href="http://numerical.recipes" target="_blank" rel="noopener">webpage</a> for all used resources in the book, including the book iteslf and the code implemetations.</p>
+<h3 id="maya-plug-in-tutorial">Maya Plug-in Tutorial</h3>
+<p>Autodesk has a set of tutorial pages for writing plug-ins, which provides detailed documentations and examples. Here is <a href="https://help.autodesk.com/view/MAYAUL/2020/ENU/?guid=Maya_SDK_MERGED_Introduction_html" target="_blank" rel="noopener">a link</a> to the tutorial page of Maya 2020.</p>
+
+        </div>
+    </article>
+</section>
+
+    <!-- Footer -->
+    <footer id="sec-foot">
+    <nav>
+        
+    <a href="/">Home</a>
+
+    <a href="/about">About</a>
+
+    <a href="/tags/blog">Blog</a>
+
+    <a href="/#sec-project">Projects</a>
+
+<!-- <a href="/#sec-project">Projects</a> -->
+<!-- <a><strong>Technical Artist</strong></a> -->
+<!-- <a><strong>Gameplay Engineer</strong></a> -->
+    </nav>
+    <div>
+        Contact Me | <a href="mailto:rongjial@andrew.cmu.edu">rongjial@andrew.cmu.edu</a>
+        <div>
+            <a class="pic" href="https://github.com/EricLee12138"><img src="/images/github.png"></a>
+            <a class="pic" href="http://www.etc.cmu.edu/blog/author/rongjial/"><img src="/images/etc.png"></a>
+            <a class="pic" href="https://www.linkedin.com/in/rongjia-li-81357919a/"><img src="/images/linkedin.png"></a>
+            <a class="pic" href="https://www.facebook.com/profile.php?id=100011859092628"><img src="/images/facebook.png"></a>
+        </div>
+    </div>
+</footer>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+
+</html>

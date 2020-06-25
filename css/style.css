@@ -1,0 +1,319 @@
+* {
+    transition: all .3s;
+    outline: unset;
+}
+:root {
+    --app-height: 100%;
+}
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+}
+header {
+    position: fixed;
+    width: 100%;
+    height: 500px;
+    background-attachment: fixed;
+    background-size: cover;
+    z-index: -1;
+}
+h1 {
+    cursor: default;
+}
+h2, h3, h4, p {
+    cursor: unset;
+}
+h1 {
+    font-size: 75pt;
+    font-weight: 600;
+    text-transform: capitalize;
+    color: #313131;
+}
+h2 {
+    font-size: 18pt;
+    font-weight: 300;
+    color: #313131;
+}
+h3 {
+    font-size: 30pt;
+    font-weight: 500;
+    color: #313131;
+}
+h4 {
+    font-size: 25pt;
+    font-weight: 400;
+    color: #414141;
+}
+p {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 20pt;
+    color: #414141;
+}
+hr {
+    clear: both;
+    margin-top: 100px;
+}
+section {
+    display: inline-block;
+}
+a {
+    cursor: pointer;
+    text-decoration: none;
+    color: unset;
+}
+
+#nav-head {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    min-height: 700px;
+}
+#nav-head h1 {
+    position: relative;
+    height: 50%;
+    line-height: 90px;
+    margin: 0;
+    text-align: center;
+    overflow: hidden;
+}
+#nav-head h1 div {
+    position: absolute;
+    bottom: 15px;
+    width: 100%;
+}
+#nav-head h1 div span { 
+    font-variant-caps: petite-caps;
+    letter-spacing: 1px;
+    color: #313131;
+}
+#nav-head h1 div span:nth-child(2) {
+    color: #414141;
+}
+#nav-head h2 {
+    height: 40px;
+    line-height: 40px;
+    margin: 0;
+    text-align: center;
+    text-transform: initial;
+    color: #414141;
+    font-weight: 500;
+}
+#nav-head h2 strong {
+    color: #ca3e47;
+    font-weight: inherit;
+}
+#nav-head #nav-menu-btn {
+    float: left;
+    width: 25px;
+    height: 20px;
+    margin: 30px 30px 0 50px;
+}
+#nav-head #nav-menu-btn img {
+    width: 100%;
+    height: 20px;
+    margin: 5px;
+}
+#nav-head #nav-learn-more {
+    display: block;
+    width: 120px;
+    height: 25px;
+    line-height: 20px;
+    padding: 10px 30px;
+    font-size: 13pt;
+    font-variant-caps: all-petite-caps;
+    bottom: 20px;
+    position: absolute;
+    left: calc(50% - 90px);
+    text-align: center;
+}
+#nav-head #nav-learn-more:hover {
+    transform: translateY(10px);
+}
+#nav-head #nav-menu {
+    height: 30px;
+    line-height: 30px;
+    padding: 30px 5%;
+    transition: unset;
+}
+#nav-head #head-cube {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: var(--app-height);
+    z-index: -1;
+}
+#nav-head div a, #sec-foot nav a {
+    font-size: 17pt;
+    font-variant-caps: all-petite-caps;
+    margin-right: 25px;
+    color: #626262;
+    font-weight: 500;
+    display: block;
+    min-width: 30px;
+    height: 27px;
+    line-height: 27px;
+    float: left;
+}
+#nav-head div a:hover, #sec-foot a:hover {
+    color: #313131;
+}
+#nav-head div a strong, #sec-foot nav a strong {
+    font-weight: inherit;
+    border-bottom: solid;
+}
+
+#sec-profile {
+    min-height: 60%;
+}
+#sec-profile h3 {
+    margin: 100px 5% 200px;
+    color: #414141;
+    font-size: 26pt;
+    line-height: 70px;
+    font-weight: 400;
+}
+#sec-profile h3 strong {
+    font-weight: 500;
+    font-variant-caps: all-petite-caps;
+    color: #ca3e47;
+    border-bottom: solid #414141;
+}
+
+#sec-blog, #sec-project {
+    width: 92%;
+    margin: 0 4%;
+}
+#sec-blog article, #sec-project article {
+    position: relative;
+    background-color: #ffffff00;
+    margin: 12px;
+    float: left;
+    overflow-x: visible;
+    overflow-y: hidden;
+    height: 400px;
+    color: #ddd;
+}
+#sec-blog article:hover, #sec-project article:hover {
+    background-color: #31313110;
+}
+.atc-small {
+    width: calc(50% - 24px);
+}
+.atc-small > a {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    z-index: 2;
+}
+#sec-blog article > a img, #sec-project article > a img {
+    width: 100%;
+    transform: translate(-50%, -50%);
+    position: relative;
+    left: 50%;
+    top: 50%;
+}
+#sec-blog article:hover.atc-small > a,  #sec-project article:hover.atc-small > a {
+    opacity: 0;
+}
+.atc-small div.atc-content {
+    z-index: 1;
+}
+.atc-small div.atc-content:hover {
+    color: white;
+    cursor: pointer;
+}
+.atc-small div.atc-content div {
+    position: absolute;
+    padding: 0 50px;
+    z-index: inherit;
+}
+.atc-small div.atc-content div:nth-child(1) {
+    bottom: 220px;
+}
+.atc-small div.atc-content div:nth-child(2) {
+    top: 180px;
+}
+.atc-small div.atc-content h3,
+.atc-small div.atc-content h4 {
+    font-size: 25pt;
+    font-weight: 700;
+    margin: 0 0 10px 5px;
+}
+.atc-small div.atc-content p {
+    font-size: 15pt;
+    margin: 10px 5px;
+    line-height: 30px;
+    overflow: hidden;
+}
+.atc-small div.atc-content a.tag {
+    padding: 2px 12px;
+    margin: 0 5px 7px 0;
+    color: #ca3e47;
+    font-size: 9pt;
+    border: solid 2px #ca3e47;
+    border-radius: 50px;
+    white-space: nowrap;
+    display: inline-block;
+    font-weight: 600;
+    height: 16px;
+    line-height: 16px;
+}
+.atc-small footer img {
+    margin: 5px;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+}
+.atc-small footer h4 {
+    float: right;
+    height: 20px;
+    line-height: 20px;
+    margin: 10px;
+}
+
+#sec-post {
+    width: 60%;
+    margin: 30px 20% 50px;
+    overflow: hidden;
+}
+
+#sec-foot {
+    background-color: #eee;
+    clear: both;
+    width: 100%;
+    height: auto;
+    margin-top: 12px;
+}
+#sec-foot > nav {
+    padding: 30px 5%;
+    height: 50px;
+}
+#sec-foot > div {
+    height: 70px;
+    padding: 15px;
+    text-align: center;
+    font-size: 12pt;
+    color: #626262;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+#sec-foot > div a.pic {
+    display: inline-block;
+    margin: 20px 7px;
+}
+#sec-foot > div a img {
+    filter: grayscale(1) opacity(0.6);
+    width: 23px;
+}
+#sec-foot > div a img:hover {
+    filter: grayscale(0) opacity(1);
+}
+
+.stf-hidden {
+    opacity: 0;
+}
+.stf-non-disp {
+    display: none !important;
+}

@@ -34,7 +34,7 @@ var loadCubeHead = function() {
         sceneHead.add(cubeHead);
     }
 
-    light = new THREE.DirectionalLight(0xffffff, 1, 100);
+    light = new THREE.DirectionalLight(0xaaaaaa, 1, 100);
     light.position.set(0, 0, 75);
     sceneHead.add(light);
 

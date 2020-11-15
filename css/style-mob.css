@@ -110,5 +110,15 @@
         line-height: 25px;
 
     }
+}
 
+@media screen and (min-width: 1200px){
+    #sec-profile, #sec-blog, #sec-project {
+        width: 1200px;
+        margin: 0 calc(50% - 600px);
+    }
+    #sec-post {
+        width: 1000px;
+        margin: 30px calc(50% - 500px) 50px;
+    }
 }

@@ -1,68 +1,145 @@
 'use strict';
 
-var canvasHead, rendererHead, sceneHead, cameraHead;
-var cubeHead, cubes = [];
+var canvas, renderer, scene, camera, world;
+var gameCanvas, gameScene, gameRenderer, gameCamera;
+var cubeBlue, cubeYellow;
+var cubeLeftTop, cubeLeftBottom, cubeRightTop, cubeRightBottom;
+var bullet, bulletBody, worldObjs = [];
 var light;
-var withCubeHead = true;
+var onClick = false;
 
-var loadCubeHead = function() {
-    canvasHead = document.getElementById('cvs-cube-head');
+var loadGameCanvas = function () {
+    document.getElementById('game-cvs-container').style.width = `${document.getElementById('game-container').offsetWidth}px`;
+    gameCanvas = document.getElementById('cvs-game');
 
-    if (!canvasHead) return;
+    if (!gameCanvas) return;
 
-    canvasHead.width = canvasHead.parentElement.offsetWidth;
-    canvasHead.height = canvasHead.parentElement.offsetHeight;
+    gameCanvas.width = gameCanvas.parentElement.offsetWidth;
+    gameCanvas.height = gameCanvas.parentElement.offsetHeight;
 
-	rendererHead = new THREE.WebGLRenderer({ canvas: canvasHead, antialias: true, logarithmicDepthBuffer: false, alpha: true });
-	rendererHead.setClearColor(0xffffff);
+    gameRenderer = new THREE.WebGLRenderer({ canvas: gameCanvas, antialias: true, logarithmicDepthBuffer: true, alpha: true });
+    gameRenderer.setClearColor(0xDDE2E4, 0);
 
-    sceneHead = new THREE.Scene();
-    
-    cameraHead = new THREE.PerspectiveCamera(45, canvasHead.width / canvasHead.height, 1, 100);
-    cameraHead.position.set(0, 0, 14);
-    cameraHead.lookAt(0, 0, 0);
+    gameScene = new THREE.Scene();
 
-    if (withCubeHead) {
-        cubeHead = new THREE.Mesh(
-            new THREE.CubeGeometry(2.5, 2.5, 2.5, 1, 1, 1),
-            new THREE.MeshLambertMaterial({ color: 0xffffff, transparent: true })
-        );
-        cubeHead.position.y = 0;
-        cubeHead.rotation.x = 0.1;
-        cubeHead.rotation.y = 0.1;
-        cubeHead.rotation.z = 0.1;
-        sceneHead.add(cubeHead);
-    }
+    gameCamera = new THREE.PerspectiveCamera(45, gameCanvas.width / gameCanvas.height, 1, 100);
+    gameCamera.position.set(0, 0, 14);
+    gameCamera.lookAt(0, 0, 0);
 
-    light = new THREE.DirectionalLight(0xaaaaaa, 1, 100);
-    light.position.set(0, 0, 75);
-    sceneHead.add(light);
+    cubeLeftTop = new THREE.Mesh(
+        new THREE.BoxGeometry(1, 1, 1, 1, 1, 1),
+        new THREE.MeshBasicMaterial({ color: 0x4F7CAC })
+    );
+    cubeLeftBottom = cubeLeftTop.clone();
+    cubeRightTop = cubeLeftTop.clone();
+    cubeRightBottom = cubeLeftTop.clone();
+    cubeLeftTop.position.set(-3, 3, 0);
+    cubeLeftBottom.position.set(-3, -3, 0);
+    cubeRightTop.position.set(3, 3, 0);
+    cubeRightBottom.position.set(3, -3, 0);
+    gameScene.add(cubeLeftTop);
+    gameScene.add(cubeLeftBottom);
+    gameScene.add(cubeRightTop);
+    gameScene.add(cubeRightBottom);
+
+    requestAnimationFrame(renderGameLoop);
+}
+
+var loadCubeHead = function () {
+    canvas = document.getElementById('cvs-cube-head');
+
+    if (!canvas) return;
+
+    canvas.width = canvas.parentElement.offsetWidth;
+    canvas.height = canvas.parentElement.offsetHeight;
+
+    renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, logarithmicDepthBuffer: true, alpha: true });
+    renderer.setClearColor(0xDDE2E4, 0);
+
+    scene = new THREE.Scene();
+
+    camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 1, 100);
+    camera.position.set(0, 0, 14);
+    camera.lookAt(0, 0, 0);
+
+    cubeBlue = new THREE.Mesh(
+        new THREE.BoxGeometry(10, 10, 10, 1, 1, 1),
+        new THREE.MeshBasicMaterial({ color: 0x4F7CAC, transparent: true })
+    );
+    cubeBlue.position.set(-7, 7, 0);
+    scene.add(cubeBlue);
+
+    cubeYellow = new THREE.Mesh(
+        new THREE.BoxGeometry(7, 7, 7, 1, 1, 1),
+        new THREE.MeshBasicMaterial({ color: 0xBF9A73, transparent: true, opacity: .9 })
+    );
+    cubeYellow.position.set(1, -8, 0);
+    scene.add(cubeYellow);
+
+    world = new CANNON.World();
+    world.gravity.set(0, 0, 0);
 
     requestAnimationFrame(renderLoopHead);
 }
 
-var renderLoopHead = function() {
-    if (withCubeHead) {
-        cubeHead.rotation.x += 0.0005;
-        cubeHead.rotation.y += 0.002;
-        cubeHead.rotation.z += 0.005;
+var renderGameLoop = function () {
+    cubeLeftTop.rotation.x += 0.005;
+    cubeLeftBottom.rotation.x += 0.005;
+    cubeRightTop.rotation.x += 0.005;
+    cubeRightBottom.rotation.x += 0.005;
+
+    gameRenderer.render(gameScene, gameCamera);
+    requestAnimationFrame(renderGameLoop);
+}
+
+var renderLoopHead = function () {
+    cubeBlue.rotation.x += 0.0005;
+    cubeBlue.rotation.y += 0.002;
+    cubeBlue.rotation.z += 0.005;
+    cubeYellow.rotation.x -= 0.0005;
+    cubeYellow.rotation.y += 0.002;
+    cubeYellow.rotation.z -= 0.005;
+
+    if (window.scrollY < document.getElementById('sec-project').offsetTop) {
+        cubeBlue.position.x = -7 - window.scrollY / 150;
+        cubeBlue.position.y = 7 - window.scrollY / 200;
+        cubeYellow.position.x = 1 + window.scrollY / 150;
+        cubeYellow.position.y = -8 + window.scrollY / 200;
+        cubeBlue.scale.set(1 + window.scrollY / 1500, 1 + window.scrollY / 1500, 1 + window.scrollY / 1500);
     }
+    // else if (window.scrollY >= document.getElementById('sec-profile').offsetTop &&
+    //     window.scrollY < document.getElementById('sec-about').offsetTop) {
 
-    cubeHead.scale.x = 1 + window.scrollY / 500;
-    cubeHead.scale.y = 1 + window.scrollY / 500;
-    cubeHead.scale.z = 1 + window.scrollY / 500;
-    cubeHead.material.opacity = 0.5 - window.scrollY / 10000;
+    // } else {
+    //     cube1.scale.x = 1 + (document.getElementById('sec-about').offsetTop - 1000) / 1500 - (window.scrollY - document.getElementById('sec-about').offsetTop + 1000) / 1500;
+    //     cube1.scale.y = 1 + (document.getElementById('sec-about').offsetTop - 1000) / 1500 - (window.scrollY - document.getElementById('sec-about').offsetTop + 1000) / 1500;
+    //     cube1.scale.z = 1 + (document.getElementById('sec-about').offsetTop - 1000) / 1500 - (window.scrollY - document.getElementById('sec-about').offsetTop + 1000) / 1500;
+    // }
 
-    updateCubeHead();
-    
-    rendererHead.render(sceneHead, cameraHead);
+    updatePhysics();
+    updateCubeHeadElement();
+
+    renderer.render(scene, camera);
     requestAnimationFrame(renderLoopHead);
 }
 
-var updateCubeHead = function() {
-    canvasHead.width = canvasHead.parentElement.offsetWidth;
-    canvasHead.height = canvasHead.parentElement.offsetHeight;
-    cameraHead.aspect = canvasHead.width / canvasHead.height;
-    cameraHead.updateProjectionMatrix();
-    rendererHead.setSize(canvasHead.width, canvasHead.height);
+var updatePhysics = function () {
+    world.step(1 / 60);
+
+    worldObjs.forEach((obj) => {
+        obj.mesh.position.copy(obj.body.position);
+        obj.mesh.quaternion.copy(obj.body.quaternion);
+        if (obj.mesh.position.z < 14 - 200) {
+            scene.remove(obj.mesh);
+            world.remove(obj.body);
+        }
+    })
+}
+
+var updateCubeHeadElement = function () {
+    canvas.width = canvas.parentElement.offsetWidth;
+    canvas.height = canvas.parentElement.offsetHeight;
+    camera.aspect = canvas.width / canvas.height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(canvas.width, canvas.height);
 }

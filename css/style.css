@@ -1,53 +1,79 @@
+@font-face {
+    font-family: 'Syne';
+    src: url('../fonts/Syne-Regular.ttf');
+    font-weight: 100;
+}
+@font-face {
+    font-family: 'Syne';
+    src: url('../fonts/Syne-SemiBold.ttf');
+    font-weight: 400;
+}
+@font-face {
+    font-family: 'Syne';
+    src: url('../fonts/Syne-ExtraBold.ttf');
+    font-weight: 700;
+}
+
 * {
-    transition: all .3s;
+    transition: opacity .3s;
     outline: unset;
+    cursor: none !important;
+}
+*::selection {
+    color: #72C156;
+    /* text-shadow: 0px -5px 0px #72C156; */
 }
 :root {
-    --app-height: 100%;
+    --app-height: 0%;
+    --color-primary: #4F7CAC;
+    --color-secondary: #BF9A73;
+    --color-background: #DDE2E4;
+    --color-text-black: #121617;
+    --color-text-gray: #44474B;
+    --font-bold: 700;
+    --font-normal: 400;
+    --font-light: 100;
 }
 body {
-    font-family: -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Syne', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    overflow-x: hidden;
+}
+h1, h2, h3, h4, p {
+    z-index: 10;
     margin: 0;
 }
-header {
-    position: fixed;
-    width: 100%;
-    height: 500px;
-    background-attachment: fixed;
-    background-size: cover;
-    z-index: -1;
-}
 h1 {
-    cursor: default;
-}
-h2, h3, h4, p {
-    cursor: unset;
-}
-h1 {
-    font-size: 75pt;
-    font-weight: 600;
+    font-size: 26pt;
+    font-weight: var(--font-bold);
     text-transform: capitalize;
-    color: #313131;
+    color: var(--color-text-black);
 }
 h2 {
-    font-size: 18pt;
-    font-weight: 300;
-    color: #313131;
+    font-size: 26pt;
+    font-weight: var(--font-normal);
+    color: var(--color-text-black);
+    line-height: 70px;
 }
 h3 {
-    font-size: 30pt;
-    font-weight: 500;
-    color: #313131;
+    font-size: 22pt;
+    font-weight: var(--font-normal);
+    color: var(--color-text-black);
 }
 h4 {
-    font-size: 25pt;
-    font-weight: 400;
-    color: #414141;
+    font-size: 15pt;
+    font-weight: var(--font-normal);
+    color: var(--color-text-gray);
 }
 p {
     font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 20pt;
-    color: #414141;
+    font-size: 13pt;
+    font-weight: var(--font-normal);
+    color: var(--color-text-gray);
+}
+strong {
+    color: var(--color-secondary);
+    font-weight: inherit;
 }
 hr {
     clear: both;
@@ -57,9 +83,46 @@ section {
     display: inline-block;
 }
 a {
-    cursor: pointer;
     text-decoration: none;
     color: unset;
+    padding: 20px;
+    margin: -20px;
+}
+
+section div {
+    position: relative;
+}
+div.background {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -100;
+    background-color: var(--color-background);
+}
+
+body div.background {
+    height: 100%;
+}
+#cursor-holder {
+    z-index: 100;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    left: -15px;
+    top: -15px;
+    transform: translate3d(0, 0, 0);
+    pointer-events: none;
+    mix-blend-mode: exclusion;
+    overflow: visible;
+    transition: all 0s;
+}
+#cursor-holder #cursor {
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    background-color: white;
+    mix-blend-mode: exclusion;
+    transition: all 0s;
 }
 
 #nav-head {
@@ -69,38 +132,11 @@ a {
     min-height: 700px;
 }
 #nav-head h1 {
-    position: relative;
-    height: 50%;
-    line-height: 90px;
-    margin: 0;
-    text-align: center;
-    overflow: hidden;
-}
-#nav-head h1 div {
     position: absolute;
-    bottom: 15px;
+    bottom: 50%;
     width: 100%;
-}
-#nav-head h1 div span { 
-    font-variant-caps: petite-caps;
-    letter-spacing: 1px;
-    color: #313131;
-}
-#nav-head h1 div span:nth-child(2) {
-    color: #414141;
-}
-#nav-head h2 {
-    height: 40px;
-    line-height: 40px;
     margin: 0;
     text-align: center;
-    text-transform: initial;
-    color: #414141;
-    font-weight: 500;
-}
-#nav-head h2 strong {
-    color: #ca3e47;
-    font-weight: inherit;
 }
 #nav-head #nav-menu-btn {
     float: left;
@@ -115,19 +151,13 @@ a {
 }
 #nav-head #nav-learn-more {
     display: block;
-    width: 120px;
+    width: 300px;
     height: 25px;
     line-height: 20px;
-    padding: 10px 30px;
-    font-size: 13pt;
-    font-variant-caps: all-petite-caps;
-    bottom: 20px;
+    bottom: 30px;
     position: absolute;
-    left: calc(50% - 90px);
+    left: calc(50% - 150px);
     text-align: center;
-}
-#nav-head #nav-learn-more:hover {
-    transform: translateY(10px);
 }
 #nav-head #nav-menu {
     height: 30px;
@@ -135,27 +165,21 @@ a {
     padding: 30px 5%;
     transition: unset;
 }
-#nav-head #head-cube {
+#head-cube {
     position: fixed;
     top: 0;
     width: 100%;
-    height: var(--app-height);
-    z-index: -1;
+    height: 100%;
+    z-index: -10;
+    pointer-events: none;
 }
 #nav-head div a, #sec-foot nav a {
-    font-size: 17pt;
-    font-variant-caps: all-petite-caps;
-    margin-right: 25px;
-    color: #626262;
-    font-weight: 500;
-    display: block;
-    min-width: 30px;
+    font-size: 22pt;
+    font-weight: 400;
+    margin-right: 50px;
+    color: var(--color-text-gray);
     height: 27px;
     line-height: 27px;
-    float: left;
-}
-#nav-head div a:hover, #sec-foot a:hover {
-    color: #313131;
 }
 #nav-head div a strong, #sec-foot nav a strong {
     font-weight: inherit;
@@ -165,45 +189,37 @@ a {
 #sec-profile {
     min-height: 50%;
 }
-#sec-profile h3 {
-    margin: 100px 5% 200px;
-    color: #414141;
-    font-size: 26pt;
-    line-height: 70px;
-    font-weight: 400;
+#sec-profile h2 {
+    margin: 100px 5%;
+    color: var(--color-text-gray);
 }
-#sec-profile h3 strong {
-    font-weight: 500;
-    font-variant-caps: all-petite-caps;
-    color: #ca3e47;
-    border-bottom: solid #414141;
+#sec-profile h2 strong {
+    font-weight: 400;
+    text-transform: uppercase;
+    /* text-shadow: 0px 1px var(--color-background); */
 }
 
 #sec-blog, #sec-project {
-    width: 92%;
-    margin: 0 4%;
+    width: 100%;
 }
 #sec-blog article, #sec-project article {
     position: relative;
-    background-color: #ffffff00;
-    margin: 12px;
+    background-color: var(--color-background);
     float: left;
-    overflow-x: visible;
-    overflow-y: hidden;
-    height: 400px;
-    color: #ddd;
+    overflow: hidden;
+    height: 500px;
 }
-#sec-blog article:hover, #sec-project article:hover {
-    background-color: #31313110;
-}
+/* #sec-blog article:hover, #sec-project article:hover {
+    background-color: transparent;
+} */
 .atc-small {
-    width: calc(50% - 24px);
+    width: 50%;
 }
 .atc-small > a {
     position: absolute;
     display: block;
     width: 100%;
-    height: 400px;
+    height: 500px;
     overflow: hidden;
     z-index: 2;
 }
@@ -213,16 +229,16 @@ a {
     position: relative;
     left: 50%;
     top: 50%;
+    pointer-events: none;
 }
 #sec-blog article:hover.atc-small > a,  #sec-project article:hover.atc-small > a {
-    opacity: 0;
+    opacity: 0.05;
 }
 .atc-small div.atc-content {
     z-index: 1;
 }
 .atc-small div.atc-content:hover {
     color: white;
-    cursor: pointer;
 }
 .atc-small div.atc-content div {
     position: absolute;
@@ -230,33 +246,27 @@ a {
     z-index: inherit;
 }
 .atc-small div.atc-content div:nth-child(1) {
-    bottom: 220px;
-}
-.atc-small div.atc-content div:nth-child(2) {
-    top: 180px;
+    width: 85%;
+    top: 250px;
 }
 .atc-small div.atc-content h3,
 .atc-small div.atc-content h4 {
-    font-size: 25pt;
-    font-weight: 700;
-    margin: 0 0 10px 5px;
+    margin: 10px 0 20px 5px;
 }
 .atc-small div.atc-content p {
-    font-size: 15pt;
     margin: 10px 5px;
     line-height: 30px;
     overflow: hidden;
 }
 .atc-small div.atc-content a.tag {
     padding: 2px 12px;
-    margin: 0 5px 7px 0;
-    color: #ca3e47;
+    margin: 0 0 5px 5px;
+    color: var(--color-secondary);
     font-size: 9pt;
-    border: solid 2px #ca3e47;
+    border: solid 2px var(--color-secondary);
     border-radius: 50px;
     white-space: nowrap;
     display: inline-block;
-    font-weight: 600;
     height: 16px;
     line-height: 16px;
 }
@@ -279,36 +289,89 @@ a {
     overflow: hidden;
 }
 
+#sec-about {
+    width: 100%;
+}
+#sec-about div.background {
+    height: 650px;
+    background-color: var(--color-text-black);
+}
+#sec-about #greeting {
+    position: relative;
+}
+#sec-about #greeting div {
+    padding: 100px 5% 25px;
+}
+#sec-about #greeting h2 {
+    color: var(--color-background);
+}
+#sec-about #game-container {
+    width: 100%;
+    overflow: hidden;
+    z-index: 10;
+}
+#sec-about #game-container * {
+    pointer-events: none;
+}
+#sec-about #game-container #selfie {
+    width: 100%;
+    position: relative;
+}
+#sec-about #game-container svg {
+    width: 100%;
+}
+#sec-about #game-cvs-container img {
+    position: absolute;
+    top: 200px;
+    left: 200px;
+    width: 200px;
+}
+#sec-about #game-container #description {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 650px;
+}
+#sec-about #game-container #description h2#description-left {
+    float: left;
+    margin: 100px 0 25px 5%;
+    width: 45%;
+}
+#sec-about #game-container #description h2#description-right {
+    float: right;
+    margin: 100px 5% 25px 0;
+    width: 45%;
+}
+/* #sec-about #game-cvs-container {
+    position: absolute;
+    top: 0;
+    height: 650px;
+    transition: top 0s, left 0s, transform 1s;
+    clip-path: url(#game);
+} */
+
 #sec-foot {
-    background-color: #eee;
     clear: both;
     width: 100%;
     height: auto;
-    margin-top: 12px;
+    background-color: var(--color-primary);
 }
-#sec-foot > nav {
-    padding: 30px 5%;
-    height: 50px;
-}
-#sec-foot > div {
-    height: 70px;
+#sec-foot #contact-me {
+    height: 250px;
     padding: 15px;
+}
+#sec-foot #contact-me h3 {
+    color: var(--color-background);
     text-align: center;
-    font-size: 12pt;
-    color: #626262;
-    font-weight: 500;
-    letter-spacing: 1px;
 }
-#sec-foot > div a.pic {
+#sec-foot #contact-me div.social-account {
+    text-align: center;
+}
+#sec-foot #contact-me div.social-account h3 {
     display: inline-block;
-    margin: 20px 7px;
-}
-#sec-foot > div a img {
-    filter: grayscale(1) opacity(0.6);
-    width: 23px;
-}
-#sec-foot > div a img:hover {
-    filter: grayscale(0) opacity(1);
+    margin: 60px;
+    width: 100px;
+    color: var(--color-text-black);
 }
 
 .stf-hidden {

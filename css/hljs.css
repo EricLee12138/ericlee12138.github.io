@@ -4,14 +4,17 @@
 }
 #post-content .hljs {
     display: block;
-    overflow-x: auto;
+    overflow-x: scroll;
     color: #333;
     background: #ffffff66;
     border: 1px solid #bbb;
     margin: 25px 0;
     padding: 0.5em;
     border-radius: 5px;
-    white-space: pre-wrap;
+    white-space: nowrap;
+}
+#post-content .hljs a {
+    margin: 0 10px;
 }
 #post-content .hljs-comment,#post-content .hljs-quote {
     color: #998;
@@ -81,4 +84,5 @@
     float: left;
     clear: both;
     width: 30px;
+    -webkit-user-select: none;
 }

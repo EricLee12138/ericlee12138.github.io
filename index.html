@@ -14,10 +14,11 @@
 
     <script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
 
-    <script src="/js/vendor/three.js"></script>
+    <script src="/js/vendor/tween.min.js"></script>
+    <script src="/js/vendor/three.min.js"></script>
     <script src="/js/vendor/jquery.min.js"></script>
     <script src="/js/vendor/hljs.js"></script>
-    <script src="/js/vendor/OrbitControls.js"></script>
+    <script src="/js/vendor/cannon.min.js"></script>
     <script>
         hljs.initHighlightingOnLoad();
     </script>
@@ -31,21 +32,31 @@
 </head>
 
 <body>
-    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Navigator -->
-    <nav id="nav-head">
-    <div id="nav-menu-btn">
-        <a href="/"><img src="/images/ericube.svg"></a>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- Overall background -->
+    <div><div class="background"></div></div>
+
+    <!-- Overall Cursor -->
+    <div id="cursor-holder">
+        <div id="cursor">
+            <!-- <div id="cursor-icon"> -->
+                <!-- <img src="/images/game/gameplay/unity.svg"> -->
+            <!-- </div> -->
+        </div>
     </div>
+
+    <!-- Navigator -->
+    <nav id="nav-head">
+    <!-- <div id="nav-menu-btn">
+        <a href="/"><img src="/images/ericube.svg"></a>
+    </div> -->
     
     <div id="nav-menu">
         
     <a href="/">Home</a>
 
-    <a href="/about">About</a>
-
-    <a href="/tags/blog">Blog</a>
-
     <a href="/#sec-project">Projects</a>
+
+    <a href="/#sec-about">About</a>
 
 <!-- <a href="/#sec-project">Projects</a> -->
 <!-- <a><strong>Technical Artist</strong></a> -->
@@ -58,10 +69,7 @@
     <canvas id="cvs-cube-head"></canvas>
 </div>
     <h1>
-        <div>
-            <span>ERIC</span><span>ube</span>
-            <h2>My journey of <strong>code</strong> and <strong>games</strong></h2>
-        </div>
+        Hello, I'm Rongjia
     </h1>
     <div>
         <a id="nav-learn-more" href="#sec-profile">
@@ -73,10 +81,12 @@
 
     <!-- Body -->
     <section id="sec-profile">
-    <h3>Experienced in <strong>game programming</strong>, familiar with established <strong>game engines</strong>, and having basic knowledge on <strong>art</strong>, <strong>sound</strong> and <strong>game design</strong>, I can implement effective programming skills on game development. Seeking to leverage my skills at a game company.</h3>
+    <div><div class="background"></div></div>
+    <h2>Experienced in <strong>game programming</strong>, familiar with established <strong>game engines</strong>, and having basic knowledge on <strong>art</strong>, <strong>sound</strong> and <strong>game design</strong>, I can implement effective programming skills on game development. Seeking to leverage my skills at a game company.</h2>
 </section>
 
 <section id="sec-project">
+    <div><div class="background"></div></div>
     
         
             <article class="atc-small">
@@ -85,9 +95,6 @@
                 </a>
                 <div class="atc-content">
                     <div>
-                        <h3><a href="/Project-11/">Spline Interface for Intuitive Skinning Weight Editing</a></h3>
-                    </div>
-                    <div>
                         
                             <a class="tag">Maya</a>
                         
@@ -95,6 +102,7 @@
                         
                             <a class="tag">Spline</a>
                         
+                        <h3><a href="/Project-11/">Spline Interface for Intuitive Skinning Weight Editing</a></h3>
                         <p>
                             A Maya plug-in prototype of a spline interface for intuitive skinning weight editing.
                         </p>
@@ -110,9 +118,6 @@
                 </a>
                 <div class="atc-content">
                     <div>
-                        <h3><a href="/Project-9/">Technical Animation Projects</a></h3>
-                    </div>
-                    <div>
                         
                             <a class="tag">Mo-Cap</a>
                         
@@ -120,8 +125,9 @@
                         
                             <a class="tag">IK</a>
                         
+                        <h3><a href="/Project-9/">Technical Animation Projects</a></h3>
                         <p>
-                            
+                            A semester-long course on technical animation and simulation. I learned a lot about cloth simulation, motion capture, IK, etc.
                         </p>
                     </div>
                 </div>
@@ -135,9 +141,6 @@
                 </a>
                 <div class="atc-content">
                     <div>
-                        <h3><a href="/Project-10/">Liftoff PGH 2020</a></h3>
-                    </div>
-                    <div>
                         
                             <a class="tag">Back-end</a>
                         
@@ -145,6 +148,7 @@
                         
                             <a class="tag">Web App</a>
                         
+                        <h3><a href="/Project-10/">Liftoff PGH 2020</a></h3>
                         <p>
                             An engaging and interactive WebApp to enhance a healthcare conference.
                         </p>
@@ -162,9 +166,6 @@
                 </a>
                 <div class="atc-content">
                     <div>
-                        <h3><a href="/Project-8/">Love Yourself</a></h3>
-                    </div>
-                    <div>
                         
                             <a class="tag">Global Game Jam</a>
                         
@@ -174,6 +175,7 @@
                         
                             <a class="tag">Unity</a>
                         
+                        <h3><a href="/Project-8/">Love Yourself</a></h3>
                         <p>
                             Global Game Jam, in 48 hours, we built an Android AR game and won the First Penguin award.
                         </p>
@@ -191,14 +193,12 @@
                 </a>
                 <div class="atc-content">
                     <div>
-                        <h3><a href="/Project-6/">Unity Editor Extension and Tool Making</a></h3>
-                    </div>
-                    <div>
                         
                             <a class="tag">Unity Editor</a>
                         
                             <a class="tag">Tool</a>
                         
+                        <h3><a href="/Project-6/">Unity Editor Extension and Tool Making</a></h3>
                         <p>
                             
                         </p>
@@ -214,14 +214,12 @@
                 </a>
                 <div class="atc-content">
                     <div>
-                        <h3><a href="/Project-5/">Building Virtual Worlds</a></h3>
-                    </div>
-                    <div>
                         
                             <a class="tag">Unity</a>
                         
                             <a class="tag">Game</a>
                         
+                        <h3><a href="/Project-5/">Building Virtual Worlds</a></h3>
                         <p>
                             Creative, collaborative, immersive, effective.
                         </p>
@@ -237,14 +235,12 @@
                 </a>
                 <div class="atc-content">
                     <div>
-                        <h3><a href="/Project-7/">BVW Sound Tracks</a></h3>
-                    </div>
-                    <div>
                         
                             <a class="tag">Sound Design</a>
                         
                             <a class="tag">Game</a>
                         
+                        <h3><a href="/Project-7/">BVW Sound Tracks</a></h3>
                         <p>
                             Learning something new is never waste of time.
                         </p>
@@ -260,9 +256,6 @@
                 </a>
                 <div class="atc-content">
                     <div>
-                        <h3><a href="/Project-2/">Eno&#39;s Umbrella</a></h3>
-                    </div>
-                    <div>
                         
                             <a class="tag">Unity</a>
                         
@@ -270,6 +263,7 @@
                         
                             <a class="tag">Mobile</a>
                         
+                        <h3><a href="/Project-2/">Eno&#39;s Umbrella</a></h3>
                         <p>
                             An umbrella, a princess, a new adventure.
                         </p>
@@ -287,9 +281,6 @@
                 </a>
                 <div class="atc-content">
                     <div>
-                        <h3><a href="/Project-1/">Hexa</a></h3>
-                    </div>
-                    <div>
                         
                             <a class="tag">Three.js</a>
                         
@@ -297,6 +288,7 @@
                         
                             <a class="tag">Game</a>
                         
+                        <h3><a href="/Project-1/">Hexa</a></h3>
                         <p>
                             An overall 3D game world with 2D displays at certain angles.
                         </p>
@@ -312,12 +304,10 @@
                 </a>
                 <div class="atc-content">
                     <div>
-                        <h3><a href="/Project-4/">Card</a></h3>
-                    </div>
-                    <div>
                         
                             <a class="tag">Web</a>
                         
+                        <h3><a href="/Project-4/">Card</a></h3>
                         <p>
                             A card style to-do list with an iOS 12 notification style.
                         </p>
@@ -332,30 +322,57 @@
     
 </section>
 
+<section id="sec-about">
+    <div><div class="background"></div></div>
+    <div id="greeting">
+        <div>
+            <h2>
+                Hello, my name is <strong>Rongjia Li</strong>. I'm currently working as a <strong>Student Associate Software Engineer</strong> at <strong>Madison Square Garden Entertainment Corp</strong>, a world leader in live experiences with a portfolio of iconic venues and entertainment brands.
+            </h2>
+        </div>
+    </div>
+    <div id="game-container">
+        <div id="selfie" >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 800">
+                <defs>
+                    <clipPath id="selfie-mask-clip">
+                        <circle id="selfie-mask" cx="0" cy="0" r="25%"></circle>
+                    </clipPath>
+                </defs>
+                <g clip-path="url(#selfie-mask-clip)">
+                    <image width="100%" href="/images/selfie.jpg"></image>
+                </g>
+            </svg>
+        </div>
+        <div id="description">
+            <!-- <h2 id="description-left">
+                Hello, my name is <strong>Rongjia Li</strong>. I'm currently working as a <strong>Student Associate Software Engineer</strong> at <strong>Madison Square Garden Entertainment Corp</strong>.
+            </h2>
+            <h2 id="description-right">
+                Hello, my name is <strong>Rongjia Li</strong>. I'm currently working as a <strong>Student Associate Software Engineer</strong> at <strong>Madison Square Garden Entertainment Corp</strong>.
+            </h2> -->
+        </div>
+    </div>
+</section>
+
     <!-- Footer -->
     <footer id="sec-foot">
-    <nav>
-        
-    <a href="/">Home</a>
-
-    <a href="/about">About</a>
-
-    <a href="/tags/blog">Blog</a>
-
-    <a href="/#sec-project">Projects</a>
-
-<!-- <a href="/#sec-project">Projects</a> -->
-<!-- <a><strong>Technical Artist</strong></a> -->
-<!-- <a><strong>Gameplay Engineer</strong></a> -->
-    </nav>
-    <div>
-        Contact Me | <a href="mailto:rongjial@andrew.cmu.edu">rongjial@andrew.cmu.edu</a>
-        <div>
-            <a class="pic" href="https://github.com/EricLee12138"><img src="/images/github.png"></a>
+    <div id="contact-me">
+        <div class="social-account">
+            <!-- <a class="pic" href="https://github.com/EricLee12138"><img src="/images/github.png"></a>
             <a class="pic" href="http://www.etc.cmu.edu/blog/author/rongjial/"><img src="/images/etc.png"></a>
-            <a class="pic" href="https://www.linkedin.com/in/rongjia-li-81357919a/"><img src="/images/linkedin.png"></a>
-            <a class="pic" href="https://www.facebook.com/profile.php?id=100011859092628"><img src="/images/facebook.png"></a>
+            <a class="pic" href="https://www.linkedin.com/in/rongjia-li-81357919a/"><img src="/images/linkedin.png"></a> -->
+            <h3><a href="https://github.com/EricLee12138">Github</a></h3>
+            <h3><a href="https://www.linkedin.com/in/rongjia-li-81357919a/">LinkedIn</a></h3>
+            <h3><a href="http://www.etc.cmu.edu/blog/author/rongjial/">ETC</a></h3>
         </div>
+        <h3>
+            <strong>Contact Me</strong>
+            <strong> | </strong>
+            <a href="mailto:rongjial@andrew.cmu.edu">rongjial@andrew.cmu.edu</a>
+            <!-- <strong> | </strong>
+            <a href="mailto:ericlee12138@outlook.com">ericlee12138@outlook.com</a> -->
+        </h3>
     </div>
 </footer>
 <script type="text/x-mathjax-config">

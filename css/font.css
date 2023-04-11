@@ -1,0 +1,113 @@
+@font-face {
+    font-family: SFP;
+    src: url(../fonts/SFPixelate.ttf);
+}
+
+@font-face {
+    font-family: PIX;
+    src: url(../fonts/PixeloidMono.ttf);
+}
+
+:root {
+    --text-shadow-light:    -1.5px -1.5px  0 white,
+                            1.5px  -1.5px  0 white,
+                            -1.5px 1.5px   0 white,
+                            1.5px  1.5px   0 white,
+                            -1.5px 0       0 white,
+                            1.5px  0       0 white,
+                            0      1.5px   0 white,
+                            0      -1.5px  0 white;
+    --text-shadow-green:    -1.5px -1.5px  0 var(--color-green),
+                            1.5px  -1.5px  0 var(--color-green),
+                            -1.5px 1.5px   0 var(--color-green),
+                            1.5px  1.5px   0 var(--color-green),
+                            -1.5px 0       0 var(--color-green),
+                            1.5px  0       0 var(--color-green),
+                            0      1.5px   0 var(--color-green),
+                            0      -1.5px  0 var(--color-green);
+    --text-shadow-dark:    -1px -1px  0 black,
+                            1px  -1px  0 black,
+                            -1px 1px   0 black,
+                            1px  1px   0 black,
+                            -1px 0       0 black,
+                            1px  0       0 black,
+                            0      1px   0 black,
+                            0      -1px  0 black;
+}
+
+body {
+    color: black;
+    font-family: PIX;
+    /* letter-spacing: -1px; */
+    /* text-shadow: 0 2px 0 #c8c8c8; */
+}
+
+h3 {
+    text-transform: uppercase;
+    user-select: none;
+    margin: 0;
+    font-size: 12pt;
+    font-weight: normal;
+    text-shadow: var(--text-shadow-light);
+}
+
+h4 {
+    text-transform: capitalize;
+    user-select: none;
+    margin: 0;
+    font-size: 12pt;
+    font-weight: normal;
+}
+
+p {
+    /* margin-inline: 15px; */
+    font-size: 10pt;
+    line-height: 18px;
+    word-spacing: -3px;
+}
+p.accent {
+    color: var(--color-grey);
+    font-size: 8pt;
+    line-height: 14px;
+}
+p.no-margin {    
+    margin: 0;
+}
+
+b {
+    font-weight: inherit;
+    color: var(--color-blue);
+}
+p.accent b {
+    color: white;
+}
+
+div.title h3, div.tile-title h3 {
+    transform: translateY(-0.6em);
+    line-height: 16px;
+}
+div.tile-title h3 {
+    color: var(--color-blue);
+}
+div.btn h3 {
+    font-size: 10pt;
+    text-align: center;
+    line-height: 26px;
+}
+div.btn.wide h3 {
+    font-size: 12pt;
+}
+div#right div#social div h3 {
+    color: var(--color-green);
+    text-align: center;
+    line-height: 69px;
+    text-shadow: var(--text-shadow-light);
+}
+
+a, a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+/* div.nav-link a:hover h3 {
+    transform: translateY(-12px);
+} */

@@ -11,7 +11,8 @@
     --color-white: #f3f3f3;
     --color-blue: #508ACC;
     --color-red: #DA5C67;
-    --color-green: #3a9676;
+    /* --color-green: #3a9676; */
+    --color-green: #508ACC;
 
     --cursor-default: url(../images/cursor.png) 4 4, default;
     --cursor-text: url(../images/cursor-text.png) 3 8, default;
@@ -19,6 +20,9 @@
     --cursor-frame: url(../images/cursor-frame.png);
     --cursor-line: url(../images/cursor-line.png);
 
+    --tile-border-image: url(../images/tile-border.png);
+    --tile-border-slice: 1;
+    --tile-border-width: 2px;
     --title-border-image: url(../images/title.png);
     --title-border-slice: 6 3 fill;
     --title-border-width: 12px 6px;
@@ -29,6 +33,11 @@
     --nav-link-border-width: 36px 54px 36px 54px;
     --nav-link-bd-border-slice: 19 28 19 28 fill;
     --nav-link-bd-border-width: 38px 56px 38px 56px;
+
+    --image-spade: url(../images/spade.png);
+    --image-club: url(../images/club.png);
+    --image-heart: url(../images/heart.png);
+    --image-diamond: url(../images/diamond.png);
 }
 
 body {
@@ -43,7 +52,7 @@ body {
     background-attachment: fixed;
     image-rendering: pixelated;
     backdrop-filter: brightness(0.8);
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
 }
 
 body, a {
@@ -58,7 +67,6 @@ div#container {
     margin: 70px auto 0;
     width: calc(var(--container-width) + 2 * var(--tile-margin));
     min-height: 1200px;
-    /* background-color: beige; */
 }
 
 div#banner {
@@ -75,7 +83,11 @@ div#nav {
     height: 75px;
     display: flex;
     box-sizing: border-box;
+    border-image: var(--tile-border-image);
+    border-image-width: var(--tile-border-width);
+    border-image-slice: var(--tile-border-slice);
     background-color: var(--color-darker-grey);
+    background-clip: padding-box;
 }
 div#nav div.nav-link, div#contact div.contact-link {
     width: 100%;
@@ -196,16 +208,119 @@ div#right div.tile {
     width: 388px;
 }
 div#poker {
+    background-color: transparent;
     min-height: 350px;
 }
 div#poker-card {
     height: 350px;
+    position: relative;
+    z-index: 100;
+    border: none;
+}
+div#poker-card div.card {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    border-image: url(../images/poker-frame.png);
+    border-image-width: 2px;
+    border-image-slice: 1 fill;
+    transform-origin: bottom;
+    transition: all 0.3s;
+}
+div#poker-card div.card div.card-letter {
+    width: 22px;
+    height: 24px;
+    top: 8px;
+    left: 5px;
+    position: absolute;
+    text-align: center;
+}
+div#poker-card div.card div.card-letter:last-of-type {
+    top: unset;
+    left: unset;
+    bottom: 8px;
+    right: 5px;
+    transform: rotate(180deg);
+}
+div#poker-card div.card div.card-suit {
+    width: 14px;
+    top: 30px;
+    left: 8px;
+    position: absolute;
+}
+div#poker-card div.card div.card-suit img {
+    width: 100%;
+}
+div#poker-card div.card div.card-suit:nth-last-of-type(2) {
+    top: unset;
+    left: unset;
+    bottom: 30px;
+    right: 8px;
+    position: absolute;
+    transform: rotate(180deg);
+}
+div#poker-card div.card div.card-pic {
+    width: 134px;
+    height: 310px;
+    top: 20px;
+    left: 28px;
+    position: absolute;
+    border: 2px solid var(--color-darker-grey);
+    box-sizing: border-box;
+}
+div#poker-card div.card div.card-pic img {
+    width: 100%;
+    height: 306px;
+    image-rendering: initial;
 }
 div#top-games {
     height: 250px;
 }
 div#leaderboard {
     height: calc(250px - var(--title-height));
+    position: relative;
+}
+div#leaderboard div.tile {
+    margin: 0;
+    width: 100%;
+    height: 36px;
+    position: relative;
+    /* top: 0; */
+    border-image: url(../images/ps5.png);
+    border-image-width: 0 6px 36px 32px ;
+    border-image-slice: 1 3 18 16 fill ;
+    box-shadow: none;
+    background-color: var(--color-blue);
+    z-index: 5;
+}
+div#leaderboard div.tile:nth-child(1) {
+    height: 100px;
+    border-image-width: 2px 6px 36px 32px ;
+    border-image-slice: 1 3 18 16 fill ;
+}
+div#leaderboard div.tile:nth-child(2) {
+    z-index: 4;
+}
+div#leaderboard div.tile:nth-child(3) {
+    z-index: 3;
+}
+div#leaderboard div.tile:nth-child(4) {
+    z-index: 2;
+}
+div#leaderboard div.tile:nth-child(5) {
+    z-index: 1;
+}
+div#leaderboard div.tile div.game-rank {
+    width: auto;
+    bottom: 4px;
+    left: 19px;
+    position: absolute;
+}
+div#leaderboard div.tile div.game-name {
+    width: 150px;
+    bottom: 4px;
+    right: 4px;
+    position: absolute;
 }
 div#main {
     min-height: 1000px;
@@ -292,13 +407,13 @@ div#main-content div#home-content-showcase {
 }
 div#video {
     min-height: 416px;
-    background-color: var(--color-darker-grey);
 }
 div#video-player {
     height: calc(320px - var(--title-height));
 }
 div#video-select {
     min-height: 96px;
+    background-color: var(--color-darker-grey);
 }
 div#video-select div.tile {
     margin: 3px;
@@ -383,7 +498,7 @@ div.tile {
     display: inline-block;
     background-size: cover;
     box-shadow: -6px 6px 0 #77777777;
-    background-color: var(--color-white);
+    background-color: transparent;
 }
 div.tile div.title, div.tile div.content, div.tile.border
 {
@@ -401,6 +516,7 @@ div.tile div.title
     border-image-width: var(--title-border-width);
     border-image-slice: var(--title-border-slice);
     border-bottom: none;
+    background-color: transparent;
 }
 div.tile div.content
 {
@@ -421,10 +537,10 @@ div.btn {
     border-image-width: var(--title-borderless-border-width);
     border-image-slice: var(--title-borderless-border-slice);
 }
-div.btn:hover {
-    filter: brightness(1.1);
+div.btn:hover, div.clickable:hover {
+    filter: brightness(1.2);
 }
-div.btn:active {
+div.btn:active, div.clickable:active {
     filter: brightness(0.9);
 }
 div.btn.wide {

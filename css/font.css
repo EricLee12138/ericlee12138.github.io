@@ -42,6 +42,10 @@ body {
     /* text-shadow: 0 2px 0 #c8c8c8; */
 }
 
+h2 {
+    color: var(--color-darker-grey);
+}
+
 h3 {
     text-transform: uppercase;
     user-select: none;
@@ -98,10 +102,31 @@ div.btn.wide h3 {
     font-size: 12pt;
 }
 div#right div#social div h3 {
-    color: var(--color-green);
+    /* color: var(--color-green); */
     text-align: center;
     line-height: 69px;
     text-shadow: var(--text-shadow-light);
+}
+div.card-letter h2 {
+    user-select: none;
+    margin: 0;
+    font-size: 11pt;
+}
+div.card-letter.heart h2,
+div.card-letter.diamond h2 {
+    color: #e01212;
+}
+
+div#leaderboard div.tile:first-child div.game-rank {
+    color: #e01212;
+}
+div#leaderboard div.tile div.game-name {
+    font-weight: normal;
+    font-size: 10pt;
+    line-height: 14px;
+    text-align: right;
+    text-transform: capitalize;
+    color: var(--color-light-grey);
 }
 
 a, a:visited {

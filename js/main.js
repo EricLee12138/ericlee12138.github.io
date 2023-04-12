@@ -6,7 +6,8 @@ let load = () => {
 
         let cursor = '#cursor';
         let instruction = '#cursor-instruction';
-        let interactables = '.btn, .link, .select, .text, a, iframe';
+        let cardGroup = '#poker-card';
+        let interactables = '.btn, .link, .select, .text, .interactable, .no-frame, a, iframe';
         let startingHover, hovering = false;
         let lastScrollTop = $(document).scrollTop();
 
@@ -21,14 +22,21 @@ let load = () => {
             let targetX = hovering ? $(target).offsetCenter().left : mousePosition.x;
             let targetY = hovering ? $(target).offsetCenter().top : mousePosition.y;
 
-            let x = moveTo(parseFloat($(cursor).css('left')), targetX, 3*delta);
-            let y = moveTo(parseFloat($(cursor).css('top')), targetY, 3*delta);
+            let x = moveTo(parseFloat($(cursor).css('left')), targetX, 2*delta);
+            let y = moveTo(parseFloat($(cursor).css('top')), targetY, 2*delta);
 
             let targetWidth = hovering ? $(target).outerWidth() + CursorPadding : 30;
             let targetHeight = hovering ? $(target).outerHeight() + CursorPadding : 30;
 
-            let width = moveTo($(cursor).outerWidth(), targetWidth, 5*delta);
-            let height = moveTo($(cursor).outerHeight(), targetHeight, 5*delta);
+            let width = moveTo($(cursor).outerWidth(), targetWidth, 4*delta);
+            let height = moveTo($(cursor).outerHeight(), targetHeight, 4*delta);
+
+            if (hovering && $(target).hasClass('no-frame')) {
+                $(cursor).css('display', 'none');
+                return;
+            } else {
+                $(cursor).css('display', 'block');
+            }
 
             $(cursor).css('left', x);
             $(cursor).css('top', y);
@@ -50,6 +58,7 @@ let load = () => {
                 }
             } else {
                 $(cursor).css('border-image-source', 'url(../images/cursor-frame.png)');
+                $(cursor).css('display', 'block');
             }
 
             if (targetInstruction.length > 0) {
@@ -91,6 +100,35 @@ let load = () => {
             lastScrollTop = scrollTop;
         });
 
+        $(cardGroup).on('mouseenter mouseover', (event) => {
+            $(cardGroup).children().each((index, child) => {
+                let count = $(cardGroup).children().length;
+                let indexFromLast = count - 1 - index;
+                if (indexFromLast > 0) {
+                    $(child).css('transform', `rotate(${-3*indexFromLast}deg) translateX(${-10*indexFromLast}px) translateY(${3*indexFromLast}px)`);
+                } else if (indexFromLast == 0) {
+                    $(child).css('transform', 'none');
+                }
+            });
+        });
+        $(cardGroup).on('mouseleave', (event) => {
+            $(cardGroup).children().each((index, child) => {
+                $(child).css('transform', 'none');
+            });
+        });
+        $(cardGroup).on('click', (event) => {
+            $(cardGroup).prepend($('#poker-card div.card').last());
+            $(cardGroup).children().each((index, child) => {
+                let count = $(cardGroup).children().length;
+                let indexFromLast = count - 1 - index;
+                if (indexFromLast > 0) {
+                    $(child).css('transform', `rotate(${-3*indexFromLast}deg) translateX(${-12*indexFromLast}px) translateY(${3*indexFromLast}px)`);
+                } else if (indexFromLast == 0) {
+                    $(child).css('transform', 'none');
+                }
+            });
+        });
+
         $(interactables).on('mouseenter mouseover', (event) => {
             hovering = true;
             target = event.currentTarget;
@@ -115,7 +153,7 @@ let load = () => {
             lastTimestamp = timestamp;
             window.requestAnimationFrame(loop);
         };
-        window.requestAnimationFrame(loop);
+        // window.requestAnimationFrame(loop);
     });
 
     jQuery.fn.extend({

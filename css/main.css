@@ -11,11 +11,7 @@
     --color-white: #f3f3f3;
     --color-blue: #508ACC;
     --color-red: #DA5C67;
-    /* --color-green: #3a9676; */
-    --color-green: #508ACC;
-
-    --cursor-default: url(../images/cursor.png) 4 4, default;
-    --cursor-text: url(../images/cursor-text.png) 3 8, default;
+    --color-green: #3a9676;
 
     --cursor-frame: url(../images/cursor-frame.png);
     --cursor-line: url(../images/cursor-line.png);
@@ -23,12 +19,18 @@
     --tile-border-image: url(../images/tile-border.png);
     --tile-border-slice: 1;
     --tile-border-width: 2px;
+
     --title-border-image: url(../images/title.png);
     --title-border-slice: 6 3 fill;
     --title-border-width: 12px 6px;
+
     --title-borderless-border-image: url(../images/title-borderless.png);
-    --title-borderless-border-slice: 6 2 fill;
-    --title-borderless-border-width: 12px 4px;
+    --title-green-borderless-border-image: url(../images/title-green-borderless.png);
+    --title-grey-borderless-border-image: url(../images/title-grey-borderless.png);
+    --title-orange-borderless-border-image: url(../images/title-orange-borderless.png);
+    --title-borderless-border-slice: 6 2 2 2 fill;
+    --title-borderless-border-width: 12px 4px 4px 4px;
+
     --nav-link-border-slice: 18 27 18 27 fill;
     --nav-link-border-width: 36px 54px 36px 54px;
     --nav-link-bd-border-slice: 19 28 19 28 fill;
@@ -51,20 +53,12 @@ body {
     background-position: top center;
     background-attachment: fixed;
     image-rendering: pixelated;
-    backdrop-filter: brightness(0.8);
+    /* backdrop-filter: brightness(0.5); */
     /* overflow-x: hidden; */
 }
 
-body, a {
-    cursor: var(--cursor-default);
-}
-
-.text h1, .text h2, .text h3, .text h4, .text p {
-    cursor: var(--cursor-text);
-}
-
 div#container {
-    margin: 70px auto 0;
+    margin: 65px auto 0;
     width: calc(var(--container-width) + 2 * var(--tile-margin));
     min-height: 1200px;
 }
@@ -77,6 +71,24 @@ div#banner {
 div#about {
     width: 388px;
     height: 100px;
+    padding: 1px 0 0 88px;
+    margin-right: 6px;
+    background-color: var(--color-white);
+    position: relative;
+    overflow: hidden;
+}
+div#about div {
+    margin: 6px;
+    height: 82px;
+    background-color: var(--color-green);
+}
+div#about img {
+    position: absolute;
+    width: 71px;
+    height: 71px;
+    left: 10px;
+    top: 12px;
+    image-rendering: pixelated;
 }
 div#nav {
     width: var(--container-width);
@@ -88,6 +100,19 @@ div#nav {
     border-image-slice: var(--tile-border-slice);
     background-color: var(--color-darker-grey);
     background-clip: padding-box;
+}
+div#nav div#nav-home {
+    background: url(../images/home.png);
+    border: none;
+}
+div#nav div#nav-home h3 {
+    position: absolute;
+    right: 7px;
+    bottom: 3px;
+    font-size: 21pt;
+    text-shadow: var(--text-shadow-thin);
+    font-weight: 100;
+    letter-spacing: 1px;
 }
 div#nav div.nav-link, div#contact div.contact-link {
     width: 100%;
@@ -104,6 +129,10 @@ div#contact div.contact-link-bg {
     margin-left: 2px;
     width: 598px;
     display: flex;
+}
+div#contact div.contact-link-bg div.btn.ignore {
+    width: 100%;
+    margin: 0;
 }
 div#contact div.contact-search {
     width: 384px;
@@ -134,18 +163,46 @@ div#nav div.nav-link div h3, div#contact div.contact-link a h3 {
     transform: translateY(-15px);
     padding-bottom: 25px;
 } */
-div#nav div.nav-gap, div#nav div.nav-search,
+div#nav div.nav-gap, div#nav div.nav-settings,
 div#contact div.contact-link-bg, div#contact div.contact-gap, div#contact div.contact-search {
     margin-left: 2px;
 }
 div#nav div.nav-gap, div#contact div.contact-gap {
     width: 10px;
 }
-div#nav div.nav-search {
+div#nav div.nav-settings {
     width: 384px;
+    display: flex;
+}
+div#nav div.nav-settings div.nav-option {
+    margin-right: 2px;
+    width: 50px;
+    height: 100%;
+    display: inline-block;
+}
+div#nav div.nav-settings div.nav-option:last-child {
+    width: 148px;
+    margin: 0;
+}
+div#nav div.nav-settings div.nav-option img {
+    width: 40px;
+    top: 15px;
+    left: calc(50% - 20px);
+}
+div#nav div.nav-settings div#nav-setting-cat {
+    border-image-source: var(--title-orange-borderless-border-image);
+    user-select: none;
+}
+div#nav div.nav-settings div#nav-setting-cat img {
+    width: 148px;
+    left: 10px;
+}
+div#nav div.nav-settings div#nav-setting-cat img#cat {
+    width: 60px;
+    z-index: 5;
 }
 
-div#nav div.nav-link, div#nav div.nav-gap, div#nav div.nav-search,
+div#nav div.nav-link, div#nav div.nav-gap,
 div#contact div.contact-link, div#contact div.contact-gap {
     display: inline-block;
     border-image: var(--title-borderless-border-image);
@@ -198,6 +255,7 @@ div#nav div.nav-link#nav-link-education {
 div#nav div.nav-link#nav-link-blogs {
     border-image-source: url(../images/blogs.png);
 }
+
 div#left div {
     width: 190px;
 }
@@ -210,6 +268,7 @@ div#right div.tile {
 div#poker {
     background-color: transparent;
     min-height: 350px;
+    z-index: 1;
 }
 div#poker-card {
     height: 350px;
@@ -340,7 +399,7 @@ div#main-content div.tile {
     border: solid var(--color-blue) 5px;
 }
 div#main-content  div#home-content-about{
-    margin-top: 13px;
+    margin-top: 15px;
 }
 div#main-content div.tile.wide {
     width: 586px;
@@ -353,7 +412,7 @@ div#main-content div.tile div.tile-title {
     padding-left: 12px;
 }
 div#main-content div.tile div.tile-content {
-    padding: 10px 9px 7px 18px;
+    padding: 20px 9px 15px 18px;
     width: auto;
     display: inline-table;
     background-color: var(--color-white);
@@ -460,6 +519,52 @@ div#right div#social img {
     left: 10px;
     top: 4px;
 }
+div#right div#code {
+    min-height: 400px;
+}
+div#right div#code-editor {
+    min-height: calc(400px - var(--title-height));
+    background-color: var(--color-white);
+    position: relative;
+}
+div#right div#code-editor div#editor {
+    height: 400px;
+}
+div#right div#code-editor div#control {
+    /* border-top: solid 1px var(--color-dark-grey); */
+    padding: 2px 0;
+    display: flex;
+    flex-direction: row-reverse;
+    background-color: var(--color-dark-grey);
+}
+div#right div#code-editor div#control div {
+    margin-left: 2px;
+}
+div#right div#code-editor div#control div:last-child {
+    margin: 5px;
+    height: 10px;
+    width: 10px;
+    left: 0;
+    position: absolute;
+    background-color: var(--color-blue);
+    border-radius: 100px;
+}
+div#right div#code-editor div#control div:last-child.red {
+    background-color: var(--color-red);
+}
+div#right div#code-editor div#control div:last-child.green {
+    background-color: var(--color-green);
+}
+div#right div#code-editor div#output {
+    /* margin: 5px 0; */
+    padding: 0 15px;
+    max-height: 100px;
+    position: relative;
+    border-radius: 5px;
+    background-color: var(--color-white);
+    overflow-y: scroll;
+}
+
 div#profile {
     min-height: 300px;
 }
@@ -477,6 +582,10 @@ div#contact {
     display: flex;
     box-sizing: border-box;
     background-color: var(--color-darker-grey);
+    border-image: var(--tile-border-image);
+    border-image-width: var(--tile-border-width);
+    border-image-slice: var(--tile-border-slice);
+    background-clip: padding-box;
 }
 div#footer {
     margin-top: 20px;
@@ -529,19 +638,28 @@ div.tile div.content.no-title {
 }
 div.btn {
     padding: 0 10px;
-    min-width: 100px;
-    min-height: 21px;
+    min-width: 50px;
+    min-height: 16px;
     position: relative;
     display: inline-block;
     border-image: var(--title-borderless-border-image);
     border-image-width: var(--title-borderless-border-width);
     border-image-slice: var(--title-borderless-border-slice);
 }
-div.btn:hover, div.clickable:hover {
-    filter: brightness(1.2);
+div.btn.green {
+    border-image-source: var(--title-green-borderless-border-image);
 }
-div.btn:active, div.clickable:active {
+div.btn.grey {
+    border-image-source: var(--title-grey-borderless-border-image);
+}
+div.btn:not(.ignore):hover, .clickable:hover {
+    filter: brightness(1.15);
+}
+div.btn:not(.ignore):active, .clickable:active {
     filter: brightness(0.9);
+}
+div.btn.small {
+    min-width: 40px;
 }
 div.btn.wide {
     padding: 10px 50px;
@@ -578,6 +696,7 @@ div#cursor {
 }
 div#cursor-instruction {
     padding: 10px;
+    right: 0;
     bottom: calc(100% + 3px);
     width: max-content;
     max-width: 300px;

@@ -13,6 +13,7 @@
     
 <link rel="stylesheet" href="/css/main.css">
 <link rel="stylesheet" href="/css/font.css">
+<link rel="stylesheet" href="/css/cursor.css">
 
 
     
@@ -20,9 +21,14 @@
 <script src="/vendor/two.min.js"></script>
 
     
+<script src="/vendor/ace/ace.js"></script>
+<script src="/vendor/ace/theme-monokai.js"></script>
+
+    
 <script src="/js/api.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/game.js"></script>
+<script src="/js/editor.js"></script>
 
 <meta name="generator" content="Hexo 6.3.0"></head>
 
@@ -39,17 +45,37 @@
         <!-- Navigator -->
         <div class="group">
     <div id="banner" class="tile border">
-
     </div>
 
-    <div id="about" class="tile end border">
-        
+    <div id="about" class="tile end border wide">
+        <img src="images/resume.png">
+        <div class="link clickable"><h3>Check My Resume</h3></div>
     </div>
 </div>
 
 <div id="nav" class="tile border">
     <div class="nav-link-bg">
-        <div class="nav-link">
+        <div id="nav-home" class="nav-link link heart no-frame">
+            <img src="images/logo.png" style="
+                position: absolute;
+                right: 10px;
+                bottom: 10px;
+                transform-origin: bottom right;
+                /* transform: scale(2); */
+            ">
+        </div>
+        <div style="display: none;">
+            <img src="images/world.png" style="
+                position: absolute;
+                bottom: -138px;
+                right: -2px;
+            ">
+            <img src="images/world-bg.png" style="
+                position: absolute;
+                bottom: -101px;
+                right: -2px;
+                z-index: -1;
+            ">
         </div>
     </div>
 
@@ -99,13 +125,41 @@
 
     <div class="nav-gap"></div>
 
-    <div class="nav-search"></div>
+    <div class="nav-settings">
+        
+        
+            <div id="nav-setting-light" class="nav-option btn" instruction="Toggle light">
+                <img src="/images/light.png">
+            </div>
+        
+            <div id="nav-setting-room" class="nav-option btn" instruction="Go to my room">
+                <img src="/images/room.png">
+            </div>
+        
+            <div id="nav-setting-music" class="nav-option btn" instruction="Toggle music">
+                <img src="/images/music.png">
+            </div>
+        
+        <div id="nav-setting-cat" class="nav-option btn no-frame heart">
+            <img id="cat" src="/images/meow.gif">
+            <img src="/images/toy.png">
+        </div>
+    </div>
+    <div id="load-mask" style="
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-color: #f1efca;
+        top: 0;
+        left: 0;
+        z-index: 500;
+    "></div>
 </div>
 
         <!-- Body -->
         <div id="left" class="group body">
     <div id="poker" class="tile">
-        <div id="poker-card" class="content no-title no-frame">
+        <div id="poker-card" class="content no-title no-frame heart">
             
             
             
@@ -190,10 +244,10 @@
 </div>
 
 <div id="right" class="group body">
-    <div id="social" class="tile border wide">
+    <!-- <div id="social" class="tile border wide">
         <img src="images/resume.png">
         <div class="link clickable"><h3>Download My Resume</h3></div>
-    </div>
+    </div> -->
     <div id="video" class="tile">
         <div class="title">
             <h3>Videos</h3>
@@ -220,6 +274,22 @@
             </div>
         </div>
     </div>
+    <div id="code" class="tile">
+        <div class="title">
+            <h3>Playground</h3>
+        </div>
+        <div id="code-editor" class="content">
+            <div id="editor" class="interactable"></div>
+            <div id="control">
+                <div id="run" class="btn small"><h3>Run</h3></div>
+                <div id="copy" class="btn small grey"><h3>Copy</h3></div>
+                <div id="status"></div>
+            </div>
+
+            <div id="output" class="code">
+            </div>
+        </div>
+    </div>
     <!-- <div id="profile" class="tile">
         <div class="title">
             <h3>Mini Rongjia</h3>
@@ -233,8 +303,7 @@
         <div class="group">
     <div id="contact" class="tile border">
         <div class="contact-link-bg">
-            <div class="contact-link">
-            </div>
+            <div class="btn orange ignore"><img style="width: 40px;" src="/images/smile.png"><h3 style="transform: translateX(20px);">Contact me</h3></div>
         </div>
     
         <div class="contact-gap"></div>

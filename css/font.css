@@ -9,14 +9,22 @@
 }
 
 :root {
-    --text-shadow-light:    -1.5px -1.5px  0 white,
-                            1.5px  -1.5px  0 white,
-                            -1.5px 1.5px   0 white,
-                            1.5px  1.5px   0 white,
-                            -1.5px 0       0 white,
-                            1.5px  0       0 white,
-                            0      1.5px   0 white,
-                            0      -1.5px  0 white;
+    --text-shadow-light:    -1.5px -1.5px  0 var(--color-white),
+                            1.5px  -1.5px  0 var(--color-white),
+                            -1.5px 1.5px   0 var(--color-white),
+                            1.5px  1.5px   0 var(--color-white),
+                            -1.5px 0       0 var(--color-white),
+                            1.5px  0       0 var(--color-white),
+                            0      1.5px   0 var(--color-white),
+                            0      -1.5px  0 var(--color-white);
+    --text-shadow-thin:     -1px -1px  0 var(--color-white),
+                            1px  -1px  0 var(--color-white),
+                            -1px 1px   0 var(--color-white),
+                            1px  1px   0 var(--color-white),
+                            -1px 0       0 var(--color-white),
+                            1px  0       0 var(--color-white),
+                            0      1px   0 var(--color-white),
+                            0      -1px  0 var(--color-white);
     --text-shadow-green:    -1.5px -1.5px  0 var(--color-green),
                             1.5px  -1.5px  0 var(--color-green),
                             -1.5px 1.5px   0 var(--color-green),
@@ -42,6 +50,10 @@ body {
     /* text-shadow: 0 2px 0 #c8c8c8; */
 }
 
+.code {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'Source Code Pro', 'source-code-pro', monospace;
+}
+
 h2 {
     color: var(--color-darker-grey);
 }
@@ -50,7 +62,7 @@ h3 {
     text-transform: uppercase;
     user-select: none;
     margin: 0;
-    font-size: 12pt;
+    font-size: 11pt;
     font-weight: normal;
     text-shadow: var(--text-shadow-light);
 }
@@ -87,16 +99,21 @@ p.accent b {
 }
 
 div.title h3, div.tile-title h3 {
-    transform: translateY(-0.6em);
+    transform: translateY(-0.7em);
     line-height: 16px;
 }
 div.tile-title h3 {
-    color: var(--color-blue);
+    /* color: var(--color-blue); */
 }
 div.btn h3 {
     font-size: 10pt;
     text-align: center;
     line-height: 26px;
+}
+div.btn.small h3 {
+    font-size: 9pt;
+    line-height: 20px;
+    text-shadow: var(--text-shadow-thin);
 }
 div.btn.wide h3 {
     font-size: 12pt;
@@ -107,6 +124,15 @@ div#right div#social div h3 {
     line-height: 69px;
     text-shadow: var(--text-shadow-light);
 }
+div#about div h3 {
+    text-align: center;
+    line-height: 82px;
+    text-shadow: var(--text-shadow-light);
+}
+div#nav div.nav-link div h3, div#contact div.contact-link a h3 {
+    font-size: 14pt;
+    text-shadow: var(--text-shadow-thin);
+}
 div.card-letter h2 {
     user-select: none;
     margin: 0;
@@ -115,6 +141,21 @@ div.card-letter h2 {
 div.card-letter.heart h2,
 div.card-letter.diamond h2 {
     color: #e01212;
+}
+
+div#right div#code-editor div#output {
+    font-size: 12px;
+}
+div#right div#code-editor div#output p {
+    line-height: 15px;
+}
+/* div#right div#code-editor div#output p:first-child {
+    margin-block-start: 0;
+} */
+div#right div#code-editor div#control div:last-child {
+    color: var(--color-white);
+    font-size: 8pt;
+    line-height: 16px;
 }
 
 div#leaderboard div.tile:first-child div.game-rank {

@@ -1,13 +1,11 @@
 let load = () => {
     $.when($.ready).then(() => {
-        console.log('loaded');
-
         let lastTimestamp;
 
         let cursor = '#cursor';
         let instruction = '#cursor-instruction';
         let cardGroup = '#poker-card';
-        let interactables = '.btn, .link, .select, .text, .interactable, .no-frame, a, iframe';
+        let interactables = '.btn:not(.ignore), .link, .select, .text, .interactable, .no-frame, a, iframe';
         let startingHover, hovering = false;
         let lastScrollTop = $(document).scrollTop();
 
@@ -16,27 +14,31 @@ let load = () => {
         let targetSize = { x: 0, y: 0 };
         let targetInstruction = '';
 
-        const CursorPadding = 10;
+        const CursorPadding = 12;
 
-        let update = (delta) => {
+        let updateCursor = (delta) => {
             let targetX = hovering ? $(target).offsetCenter().left : mousePosition.x;
             let targetY = hovering ? $(target).offsetCenter().top : mousePosition.y;
 
-            let x = moveTo(parseFloat($(cursor).css('left')), targetX, 2*delta);
-            let y = moveTo(parseFloat($(cursor).css('top')), targetY, 2*delta);
+            let x = moveTo(parseFloat($(cursor).css('left')), targetX, 3*delta);
+            let y = moveTo(parseFloat($(cursor).css('top')), targetY, 3*delta);
 
             let targetWidth = hovering ? $(target).outerWidth() + CursorPadding : 30;
             let targetHeight = hovering ? $(target).outerHeight() + CursorPadding : 30;
 
-            let width = moveTo($(cursor).outerWidth(), targetWidth, 4*delta);
-            let height = moveTo($(cursor).outerHeight(), targetHeight, 4*delta);
+            let width = moveTo($(cursor).outerWidth(), targetWidth, 3*delta);
+            let height = moveTo($(cursor).outerHeight(), targetHeight, 3*delta);
 
-            if (hovering && $(target).hasClass('no-frame')) {
-                $(cursor).css('display', 'none');
-                return;
-            } else {
-                $(cursor).css('display', 'block');
-            }
+            // if (hovering) {
+            //     if ($(target).hasClass('no-frame') || 
+            //     ($(target).prop('nodeName') == 'IFRAME' && $(target).parents().hasClass('no-frame')))
+            //     {
+            //         $(cursor).css('display', 'none');
+            //         // return;
+            //     }
+            // } else {
+            //     $(cursor).css('display', 'block');
+            // }
 
             $(cursor).css('left', x);
             $(cursor).css('top', y);
@@ -95,8 +97,8 @@ let load = () => {
             if (hovering) return;
             let scrollTop = $(document).scrollTop();
             let scrollOffset = scrollTop - lastScrollTop;
-            let posY = $(cursor).offsetCenter().top + scrollOffset;
-            $(cursor).css('top', Math.min(posY, $(document.body).innerHeight() - $(cursor).outerHeight()));
+            let posY = mousePosition.y + scrollOffset;
+            mousePosition.y = Math.min(posY, $(document.body).innerHeight() - $(cursor).outerHeight() / 2);
             lastScrollTop = scrollTop;
         });
 
@@ -105,7 +107,7 @@ let load = () => {
                 let count = $(cardGroup).children().length;
                 let indexFromLast = count - 1 - index;
                 if (indexFromLast > 0) {
-                    $(child).css('transform', `rotate(${-3*indexFromLast}deg) translateX(${-10*indexFromLast}px) translateY(${3*indexFromLast}px)`);
+                    $(child).css('transform', `rotate(${-3*indexFromLast}deg) translateX(${-10*indexFromLast}px) translateY(${4*indexFromLast}px)`);
                 } else if (indexFromLast == 0) {
                     $(child).css('transform', 'none');
                 }
@@ -122,7 +124,7 @@ let load = () => {
                 let count = $(cardGroup).children().length;
                 let indexFromLast = count - 1 - index;
                 if (indexFromLast > 0) {
-                    $(child).css('transform', `rotate(${-3*indexFromLast}deg) translateX(${-12*indexFromLast}px) translateY(${3*indexFromLast}px)`);
+                    $(child).css('transform', `rotate(${-3*indexFromLast}deg) translateX(${-12*indexFromLast}px) translateY(${4*indexFromLast}px)`);
                 } else if (indexFromLast == 0) {
                     $(child).css('transform', 'none');
                 }
@@ -146,14 +148,76 @@ let load = () => {
             targetInstruction = '';
         });
 
+        let catButton = '#nav-setting-cat';
+        let cat = '#nav-setting-cat img#cat';
+        let catMoving = true;
+        let catTimeout;
+        let catDirection = -1;
+
+        $(catButton).on('click', () => {
+            catMoving = false;
+            clearTimeout(catTimeout);
+            $(cat).attr('src', '/images/meow.gif');
+
+            catTimeout = setTimeout(() => { triggerCat(); }, 2500);
+        });
+
+        let triggerCat = () => {
+            let max = 10, min = 6;
+            let sec = Math.random() * (max - min) + min;
+
+            if (catMoving) $(cat).attr('src', '/images/cat.gif');
+            else $(cat).attr('src', '/images/walk.gif');
+
+            catMoving = !catMoving;
+
+            catTimeout = setTimeout(() => { triggerCat(); }, sec * 1000);
+        };
+
+        triggerCat();
+
+        let updateCat = (delta) => {
+            let catWidth = $(cat).outerWidth();
+            let catButtonWidth = $(catButton).innerWidth();
+            let catCssPos = parseFloat($(cat).css('left'));
+
+            let catSpeed = 20 / 1000;
+
+            if (catCssPos <= 0 || catCssPos + catWidth >= catButtonWidth) {
+                catCssPos = Math.max(0, catCssPos);
+                catCssPos = Math.min(catButtonWidth - catWidth, catCssPos);
+                $(cat).css('left', catCssPos);
+            }
+
+            if (!catMoving) return;
+
+            if ((catCssPos <= 0 && catDirection < 0) ||
+                (catCssPos + catWidth >= catButtonWidth && catDirection > 0)) {
+                catDirection *= -1;
+            }
+
+            $(cat).css('left', catCssPos + catDirection * catSpeed * delta);
+            $(cat).css('transform', `scaleX(${-catDirection})`);
+        };
+
+        let update = (delta) => {
+            updateCat(delta);
+            updateCursor(delta);
+        };
+
         let loop = () => {
-            let timestamp = Date.now();
+            let timestamp = performance.now();
 
             update(timestamp - lastTimestamp);
             lastTimestamp = timestamp;
             window.requestAnimationFrame(loop);
         };
-        // window.requestAnimationFrame(loop);
+        window.requestAnimationFrame(loop);
+
+        let loadMask = $('#load-mask');
+        $(loadMask).animate({
+            opacity: 0
+        }, 1000, () => { $(loadMask).css('display', 'none'); })
     });
 
     jQuery.fn.extend({

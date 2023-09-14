@@ -9,12 +9,9 @@
     <!-- <link rel="shortcut icon" href="/images/ericube.svg"> -->
 
     
-
-    
 <link rel="stylesheet" href="/css/main.css">
 <link rel="stylesheet" href="/css/font.css">
 <link rel="stylesheet" href="/css/cursor.css">
-
 
     
 <script src="/vendor/jquery.min.js"></script>
@@ -27,8 +24,16 @@
     
 <script src="/js/api.js"></script>
 <script src="/js/main.js"></script>
-<script src="/js/game.js"></script>
 <script src="/js/editor.js"></script>
+
+
+    
+
+    
+        
+<link rel="stylesheet" href="/css/post.css">
+
+    
 
 <meta name="generator" content="Hexo 6.3.0"></head>
 
@@ -48,15 +53,15 @@
     </div>
 
     <div id="about" class="tile end border wide">
-        <img src="images/resume.png">
-        <div class="link clickable"><h3>Check My Resume</h3></div>
+        <img src="/images/resume.png">
+        <div class="link clickable" href="/files/resume.pdf"><h3>Check My Resume</h3></div>
     </div>
 </div>
 
 <div id="nav" class="tile border">
     <div class="nav-link-bg">
-        <div id="nav-home" class="nav-link link heart no-frame">
-            <img src="images/logo.png" style="
+        <div id="nav-home" class="nav-link link heart no-frame" href="/">
+            <img src="/images/logo.png" style="
                 position: absolute;
                 right: 10px;
                 bottom: 10px;
@@ -65,12 +70,12 @@
             ">
         </div>
         <div style="display: none;">
-            <img src="images/world.png" style="
+            <img src="/images/world.png" style="
                 position: absolute;
                 bottom: -138px;
                 right: -2px;
             ">
-            <img src="images/world-bg.png" style="
+            <img src="/images/world-bg.png" style="
                 position: absolute;
                 bottom: -101px;
                 right: -2px;
@@ -145,7 +150,7 @@
             <img src="/images/toy.png">
         </div>
     </div>
-    <div id="load-mask" style="
+    <!-- <div id="load-mask" style="
         position: fixed;
         width: 100%;
         height: 100%;
@@ -153,7 +158,7 @@
         top: 0;
         left: 0;
         z-index: 500;
-    "></div>
+    "></div> -->
 </div>
 
         <!-- Body -->
@@ -237,7 +242,68 @@
         </div>
         <div id="main-content" class="content">
             
-    Other
+
+    
+<iframe width="598" height="400" src="https://www.youtube.com/embed/nWryvhC41Oo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+
+<div class="tile wide text">
+    <div class="tile-title">
+        <h3>Spline Interface for Intuitive Skinning Weight Editing</h3>
+    </div>
+    <div class="tile-content">
+        <p>The project is aimed at designing and implementing a prototypical spline interface for skinning weights editing, which is inspired by <a target="_blank" rel="noopener" href="https://www.notion.so/Final-Project-Report-d4810c392f3f476b8de7376ab5d62777#e4ddb388b2174ff3b6147594a9ddc2d7">the paper</a> <em>Spline Interface for Weights Editing</em> and more intuitive and easier to use than common paint-based interfaces.</p>
+<p>Specifically, the interface will be implemented in Maya using Maya plug-in APIs.</p>
+<h2 id="Techniques"><a href="#Techniques" class="headerlink" title="Techniques"></a>Techniques</h2><p>The interface has three main parts.</p>
+<p>The first part retrieves data from the original mesh and joints, namely the mesh verticies (MVs) and skinning weights. The second part allows users to create splines and specify the spline values. The third part uses original skinning weights, user defined splines and spline values as input and generate new weight values and set them back to the mesh and joints.</p>
+<h3 id="Retrieve-original-data"><a href="#Retrieve-original-data" class="headerlink" title="Retrieve original data"></a>Retrieve original data</h3><p>As metioned before, original data of the mesh and joints are needed by the later steps.</p>
+<p>First, the current interface requires MVs for users to create splines. On the one hand, the interface should provide a way to select some vertices as control vertices (CVs). On the other hand, the interface has to know the actual position of each MV for B-spline generation. Maya has public class <code>MSelectionList</code> for making selection and <code>MItMeshVertex</code> for interating among the selected MVs.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Global selection list</span></span><br><span class="line">MSelectionList selectionList;</span><br><span class="line">MGlobal::<span class="built_in">getActiveSelectionList</span>(selectionList);</span><br><span class="line"></span><br><span class="line"><span class="comment">// DAG path and component</span></span><br><span class="line">MDagPath dagPath;</span><br><span class="line">MObject component;</span><br><span class="line"></span><br><span class="line"><span class="comment">// DAG path and component of selected mesh</span></span><br><span class="line">selectionList.<span class="built_in">getDagPath</span>(<span class="number">0</span>, dagPath, component);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Mesh vertex iterator</span></span><br><span class="line"><span class="function">MItMeshVertex <span class="title">vertexIt</span><span class="params">(dagPath, component)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>Second, the interface retrieves and stores the original skinning weights for the future use when calculating new weights. Similarly, interface should provide a way for selection of the specific mesh and joints before getting the actual weights. Maya uses public class <code>MFnSkinCluster</code> to retrieve skinning related data.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Global selection list</span></span><br><span class="line">MSelectionList selectionList;</span><br><span class="line">MGlobal::<span class="built_in">getActiveSelectionList</span>(selectionList);</span><br><span class="line"></span><br><span class="line"><span class="comment">// DAG paths and components of selected joint and mesh</span></span><br><span class="line">MDagPath jointDagPath, meshDagPath;</span><br><span class="line">MObject jointComponent, meshComponent;</span><br><span class="line">    </span><br><span class="line">selectionList.<span class="built_in">getDagPath</span>(<span class="number">0</span>, jointDagPath, jointComponent);</span><br><span class="line">selectionList.<span class="built_in">getDagPath</span>(<span class="number">1</span>, meshDagPath, meshComponent);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Skin cluster</span></span><br><span class="line"><span class="function">MItDependencyNodes <span class="title">iter</span><span class="params">(MFn::kSkinClusterFilter)</span></span>;</span><br><span class="line"><span class="function">MFnSkinCluster <span class="title">skinCluster</span><span class="params">(iter.thisNode())</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Create-splines"><a href="#Create-splines" class="headerlink" title="Create splines"></a>Create splines</h3><p>The original paper uses the standard cubic B-spline model, which is widely used for its smoothness and local controllability. In Euclidean space, a B-spline curve is defined as a weighted sum of B-spline basis functions. Given a set of anchor points, a B-spline curve is given by:</p>
+<p>$$s(u)&#x3D;\sum_{i&#x3D;0}^{n-1}c_i^pR_{i,r}(u)$$</p>
+<p>There are plenty ways to create B-splines since it’s already a very common used model. Maya has its own APIs for creating B-splines as well, wrapped in the public class <code>MFnNurbsCurve</code>.</p>
+<p>The only thing that should be concerned about is the form of the spline and how to specify the required parameters. The spline should be working correctly as long as it’s closed, however, to make the visualization better, we applied a more restrictive form, a periodic form.</p>
+<p>Maya’s non-uniform rational B-spline (NURBS) curve is defined by an array of CVs, an array of knot values, a degree and a form, which is already decided to be a periodic form.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Spline constants</span></span><br><span class="line"><span class="type">const</span> <span class="type">unsigned</span> deg = <span class="number">3</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">unsigned</span> nspans = vertexIt.<span class="built_in">count</span>() / splineNumber;</span><br><span class="line"><span class="type">const</span> <span class="type">unsigned</span> ncvs = nspans + deg;</span><br><span class="line"><span class="type">const</span> <span class="type">unsigned</span> nknots = nspans + <span class="number">2</span> * deg - <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<p>After defining and calculating all the required parameters, the spline can be easily created by calling the <code>create</code> method:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Control vertices and knots used to create splines</span></span><br><span class="line">MPointArray controlVertices;</span><br><span class="line">MDoubleArray knotSequences;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Create periodic spline</span></span><br><span class="line">MFnNurbsCurve curve;</span><br><span class="line">curve.<span class="built_in">create</span>(controlVertices, knotSequences, deg,</span><br><span class="line">            MFnNurbsCurve::kPeriodic, <span class="literal">false</span>, <span class="literal">false</span>, MObject::kNullObj, &amp;status);</span><br></pre></td></tr></table></figure>
+
+<p>The spline values are relatively easy to get since they are purely an array of floating numbers. Users can simply specify them in the command.</p>
+<h3 id="Calculate-weights"><a href="#Calculate-weights" class="headerlink" title="Calculate weights"></a>Calculate weights</h3><p>With splines and spline values specified and original weights retrieved and stored, we can calculate the new weights and set them back to the mesh and joints. The original paper has introduced several methods of weight conputation, including interpolation-based method, diffusion flow method and hybrid method. In this project, interpolation-based method with Laplacian operator is applied.</p>
+<p>According to the paper, the problem can be formulated within a surface with the linear equality constraint of splines:</p>
+<p>$$w^s&#x3D;\arg\min_x x^TQx\ \text{  subject to  }Ax&#x3D;s^i$$</p>
+<p>After the simplification, the mesh is a simple polygon cylinder, the splines can be considered as a set of MVs, and the original weights can be considered as simply a 2D array  of floating numbers. What’s more, the MVs and weights can be easily associated with indices. Therefore, the weight interpolation can be simplified as a 2D image filtering problem, which can be solved by Laplacian interpolation. <a target="_blank" rel="noopener" href="http://numerical.recipes/">The book</a> <em>Numerical Recipes 3rd Edition: The Art of Scientific Computing</em> has given a very detailed explanation and open-sourced implementation.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">MatDoub matrix = <span class="built_in">NRmatrix</span>&lt;<span class="type">double</span>&gt;(<span class="number">49</span>, <span class="number">40</span>, weights);</span><br><span class="line"><span class="function">Laplace_interp <span class="title">interp</span><span class="params">(matrix)</span></span>;</span><br><span class="line"></span><br><span class="line">interp.<span class="built_in">solve</span>();</span><br><span class="line">newJointWeights.<span class="built_in">clear</span>();</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; interp.mat.<span class="built_in">nrows</span>(); i++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; interp.mat.<span class="built_in">ncols</span>(); j++) &#123;</span><br><span class="line">        newJointWeights.<span class="built_in">append</span>(interp.mat[i][j]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h2><h3 id="Create-splines-1"><a href="#Create-splines-1" class="headerlink" title="Create splines"></a>Create splines</h3><img src="/thumbnails/result0.png" style="float:left;width:48%;margin-right:2%;margin-top:10px;margin-bottom:10px;" />
+<img src="/thumbnails/result1.png" style="float:left;width:48%;margin-left:2%;margin-top:10px;margin-bottom:10px;" />
+
+<h3 id="Calculate-weights-1"><a href="#Calculate-weights-1" class="headerlink" title="Calculate weights"></a>Calculate weights</h3><img src="/thumbnails/result2.png" style="float:left;width:48%;margin-right:2%;margin-top:10px;margin-bottom:10px;" />
+<img src="/thumbnails/result3.png" style="float:left;width:48%;margin-left:2%;margin-top:10px;margin-bottom:10px;" />
+
+<h2 id="Follow-up"><a href="#Follow-up" class="headerlink" title="Follow-up"></a>Follow-up</h2><h3 id="More-complicated-models-and-meshes"><a href="#More-complicated-models-and-meshes" class="headerlink" title="More complicated models and meshes"></a>More complicated models and meshes</h3><p>Maya has its own rules of interating among all the MVs. The interface now only supports polygon cylinders or meshes that are deformed from polygon cylinders, because the current algorithm hasn’t considered the order of the MVs. It now doesn’t affect the weight calculation part so the weight values can be computed correctly. But the splines are not correctly generated.</p>
+<p>Therefore, to support more complicated models and meshes, the actual world position of each MV should be considered so as to know the order of the MVs when generating splines.</p>
+<h3 id="More-delicate-user-interface"><a href="#More-delicate-user-interface" class="headerlink" title="More delicate user interface"></a>More delicate user interface</h3><p>One of the reasons why the original paper is very impressive is because the intuitive interface and the user experience can save users a lot of time compared to paint-based interfaces. The interface in this project is mainly focusing on implemeting the algorithm process, so the interface can hardly be considered effective and intuitive.</p>
+<p>Therefore, to actually help artists and animators reduce their work, more delicate and intuitove user interface should be created.</p>
+<h3 id="Spline-editing"><a href="#Spline-editing" class="headerlink" title="Spline editing"></a>Spline editing</h3><p>Similar to friendly interface, spline editing makes no difference in terms of the algorithm itself, but it is one of the factors that make the interface very easy to use and can be possibly used in real production.</p>
+<h3 id="Spline-on-mesh-surface"><a href="#Spline-on-mesh-surface" class="headerlink" title="Spline on mesh surface"></a>Spline on mesh surface</h3><p>In this project, the splines are generated using MVs as CVs, so they are in fact inside the mesh, which has to be changed when adding spline editing to the interface. The original paper uses Phong Projection to project the spline to the surface, which is a very important step.</p>
+<h3 id="Weight-computation"><a href="#Weight-computation" class="headerlink" title="Weight computation"></a>Weight computation</h3><p>As mentioned before, the original has applied multiple weight computation methods for better performance and effect. For example, interpolation-based methods are good at distributing values for the area between two iso-values, while the diffusion flow method is a better choice to calculatng weights for the rest of the area. Besides, even just for interpolation-based methods, different operators or energy can have different performance and results.</p>
+<p>Therefore, to improve the interface, a lot of different methods should be applied, compared and optimized, if necessary.</p>
+<h3 id="Weight-freezing"><a href="#Weight-freezing" class="headerlink" title="Weight freezing"></a>Weight freezing</h3><p>Mostly, the skinning weights will be edited and modified for several times. So one thing the interface should do is to maintain the weights of the current joint when modifying those of the next joint, which is also addressed by the original paper. For the current interface, it should be easy to do by simply storing all the modified weights and setting them back the mesh when all edits are done.</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><h3 id="Original-Paper"><a href="#Original-Paper" class="headerlink" title="Original Paper"></a>Original Paper</h3><p>Go to the original paper <em>Spline Interface for Weights Editing</em> by SEUNGBAE BANG and SUNG-HEE LEE, Korea Advanced Institute of Science and Technology via <a target="_blank" rel="noopener" href="http://motionlab.kaist.ac.kr/?page_id=5457">this link</a>.</p>
+<h3 id="Math-library"><a href="#Math-library" class="headerlink" title="Math library"></a>Math library</h3><p>Maya provides a <a target="_blank" rel="noopener" href="https://help.autodesk.com/cloudhelp/2020/ENU/Maya-SDK-MERGED/cpp_ref/index.html">reference</a> for detailed documentation of the classes, methods, types and constants provided by the Maya API along with cross-linked source for the code samples provided in the Maya Development Kit.</p>
+<p>The enterprise of the book provides a very profession <a target="_blank" rel="noopener" href="http://numerical.recipes/">webpage</a> for all used resources in the book, including the book iteslf and the code implemetations.</p>
+<h3 id="Maya-Plug-in-Tutorial"><a href="#Maya-Plug-in-Tutorial" class="headerlink" title="Maya Plug-in Tutorial"></a>Maya Plug-in Tutorial</h3><p>Autodesk has a set of tutorial pages for writing plug-ins, which provides detailed documentations and examples. Here is <a target="_blank" rel="noopener" href="https://help.autodesk.com/view/MAYAUL/2020/ENU/?guid=Maya_SDK_MERGED_Introduction_html">a link</a> to the tutorial page of Maya 2020.</p>
+
+    </div>
+</div>
+
+
 
         </div>
     </div>
@@ -258,19 +324,19 @@
         <div id="video-select" class="content">
             <div class="tile clickable">
                 <div class="select select-bg" select="nWryvhC41Oo" instruction="Spline Interface for Intuitive Skinning Weight Editing"></div>
-                <img src="images/msg.png">
+                <img src="/images/msg.png">
             </div>
             <div class="tile clickable">
                 <div class="select select-bg" select="kNO2yru0e9s" instruction="CCD IK and FABRIK"></div>
-                <img src="images/msg.png">
+                <img src="/images/msg.png">
             </div>
             <div class="tile clickable">
                 <div class="select select-bg" select="4JyUwbqGQyo" instruction="Hexahedron"></div>
-                <img src="images/msg.png">
+                <img src="/images/msg.png">
             </div>
             <div class="tile clickable">
                 <div class="select select-bg" select="T4tKBBSb12Q" instruction="Whale You Were Here"></div>
-                <img src="images/msg.png">
+                <img src="/images/msg.png">
             </div>
         </div>
     </div>

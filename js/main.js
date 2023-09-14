@@ -20,25 +20,25 @@ let load = () => {
             let targetX = hovering ? $(target).offsetCenter().left : mousePosition.x;
             let targetY = hovering ? $(target).offsetCenter().top : mousePosition.y;
 
-            let x = moveTo(parseFloat($(cursor).css('left')), targetX, 3*delta);
-            let y = moveTo(parseFloat($(cursor).css('top')), targetY, 3*delta);
+            let x = moveTo(parseFloat($(cursor).css('left')), targetX, 2*delta);
+            let y = moveTo(parseFloat($(cursor).css('top')), targetY, 2*delta);
 
             let targetWidth = hovering ? $(target).outerWidth() + CursorPadding : 30;
             let targetHeight = hovering ? $(target).outerHeight() + CursorPadding : 30;
 
-            let width = moveTo($(cursor).outerWidth(), targetWidth, 3*delta);
-            let height = moveTo($(cursor).outerHeight(), targetHeight, 3*delta);
+            let width = moveTo($(cursor).outerWidth(), targetWidth, 2*delta);
+            let height = moveTo($(cursor).outerHeight(), targetHeight, 2*delta);
 
-            // if (hovering) {
-            //     if ($(target).hasClass('no-frame') || 
-            //     ($(target).prop('nodeName') == 'IFRAME' && $(target).parents().hasClass('no-frame')))
-            //     {
-            //         $(cursor).css('display', 'none');
-            //         // return;
-            //     }
-            // } else {
-            //     $(cursor).css('display', 'block');
-            // }
+            if (hovering) {
+                if ($(target).hasClass('no-frame') || 
+                ($(target).prop('nodeName') == 'IFRAME' && $(target).parents().hasClass('no-frame')))
+                {
+                    $(cursor).css('display', 'none');
+                    // return;
+                }
+            } else {
+                $(cursor).css('display', 'block');
+            }
 
             $(cursor).css('left', x);
             $(cursor).css('top', y);
@@ -51,15 +51,15 @@ let load = () => {
                 switch($(target).prop('nodeName'))
                 {
                 case 'A':
-                    $(cursor).css('border-image-source', 'url(../images/cursor-line.png)');
+                    $(cursor).css('border-image-source', 'url(/images/cursor-line.png)');
                     break;
 
                 default:
-                    $(cursor).css('border-image-source', 'url(../images/cursor-frame.png)');
+                    $(cursor).css('border-image-source', 'url(/images/cursor-frame.png)');
                     break;
                 }
             } else {
-                $(cursor).css('border-image-source', 'url(../images/cursor-frame.png)');
+                $(cursor).css('border-image-source', 'url(/images/cursor-frame.png)');
                 $(cursor).css('display', 'block');
             }
 
@@ -140,7 +140,8 @@ let load = () => {
             if (text != undefined && text.length > 0) {
                 targetInstruction = text;
             } else if ($(target).prop('nodeName') == 'A') {
-                targetInstruction = 'Learn more';
+                targetInstruction = $(target).attr('href');
+                // targetInstruction = 'Learn more';
             }
         });
         $(interactables).on('mouseleave', (event) => {

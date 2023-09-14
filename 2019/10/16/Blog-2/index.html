@@ -9,12 +9,9 @@
     <!-- <link rel="shortcut icon" href="/images/ericube.svg"> -->
 
     
-
-    
 <link rel="stylesheet" href="/css/main.css">
 <link rel="stylesheet" href="/css/font.css">
 <link rel="stylesheet" href="/css/cursor.css">
-
 
     
 <script src="/vendor/jquery.min.js"></script>
@@ -27,8 +24,16 @@
     
 <script src="/js/api.js"></script>
 <script src="/js/main.js"></script>
-<script src="/js/game.js"></script>
 <script src="/js/editor.js"></script>
+
+
+    
+
+    
+        
+<link rel="stylesheet" href="/css/post.css">
+
+    
 
 <meta name="generator" content="Hexo 6.3.0"></head>
 
@@ -48,15 +53,15 @@
     </div>
 
     <div id="about" class="tile end border wide">
-        <img src="images/resume.png">
-        <div class="link clickable"><h3>Check My Resume</h3></div>
+        <img src="/images/resume.png">
+        <div class="link clickable" href="/files/resume.pdf"><h3>Check My Resume</h3></div>
     </div>
 </div>
 
 <div id="nav" class="tile border">
     <div class="nav-link-bg">
-        <div id="nav-home" class="nav-link link heart no-frame">
-            <img src="images/logo.png" style="
+        <div id="nav-home" class="nav-link link heart no-frame" href="/">
+            <img src="/images/logo.png" style="
                 position: absolute;
                 right: 10px;
                 bottom: 10px;
@@ -65,12 +70,12 @@
             ">
         </div>
         <div style="display: none;">
-            <img src="images/world.png" style="
+            <img src="/images/world.png" style="
                 position: absolute;
                 bottom: -138px;
                 right: -2px;
             ">
-            <img src="images/world-bg.png" style="
+            <img src="/images/world-bg.png" style="
                 position: absolute;
                 bottom: -101px;
                 right: -2px;
@@ -145,7 +150,7 @@
             <img src="/images/toy.png">
         </div>
     </div>
-    <div id="load-mask" style="
+    <!-- <div id="load-mask" style="
         position: fixed;
         width: 100%;
         height: 100%;
@@ -153,7 +158,7 @@
         top: 0;
         left: 0;
         z-index: 500;
-    "></div>
+    "></div> -->
 </div>
 
         <!-- Body -->
@@ -237,7 +242,88 @@
         </div>
         <div id="main-content" class="content">
             
-    Other
+
+    
+
+<div class="tile wide text">
+    <div class="tile-title">
+        <h3>LeetCode</h3>
+    </div>
+    <div class="tile-content">
+        <h2 id="Strings-Reverse-Integer"><a href="#Strings-Reverse-Integer" class="headerlink" title="[Strings] Reverse Integer"></a>[Strings] Reverse Integer</h2><p>Given a 32-bit signed integer, reverse digits of an integer.</p>
+<p><strong>Example 1</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: 	123</span><br><span class="line">Output: 321</span><br></pre></td></tr></table></figure>
+
+<p><strong>Example 2</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: 	-123</span><br><span class="line">Output: -321</span><br></pre></td></tr></table></figure>
+
+<p><strong>Example 3</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: 	120</span><br><span class="line">Output: 21</span><br></pre></td></tr></table></figure>
+
+<p><strong>Note</strong></p>
+<p>Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: $[−2^{31}, 2^{31} − 1]$. For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.</p>
+<h3 id="InitialThoughts"><a href="#InitialThoughts" class="headerlink" title="InitialThoughts"></a>InitialThoughts</h3><ol>
+<li>Get each digit number of the input number and store them into a vector.</li>
+<li>Use two iterators to iterate from the beginning and the end and swap two values of the iterators, therefore, get the reversed number.</li>
+<li>Check the validity of the number by comparing reversed digits with the digits of the biggest integer <code>INT_MAX</code>.</li>
+<li>Combined valid digits into one integer and return, otherwise, return 0.</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">reverse</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123;</span><br><span class="line">  	vector&lt;<span class="type">int</span>&gt; bits, max_bits;</span><br><span class="line">    <span class="type">int</span> a, b;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> i = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (i &lt; <span class="number">1000000000</span>) &#123;</span><br><span class="line">        a = x / i;</span><br><span class="line">        b = x / (i * <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (a == <span class="number">0</span> &amp;&amp; b == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        bits.<span class="built_in">push_back</span>(a - b * <span class="number">10</span>);</span><br><span class="line">        i *= <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (x / i != <span class="number">0</span>)</span><br><span class="line">        bits.<span class="built_in">push_back</span>(x / i);</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> j = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (j &lt; <span class="number">1000000000</span>) &#123;</span><br><span class="line">        a = INT_MAX / j;</span><br><span class="line">        b = INT_MAX / (j * <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (a == <span class="number">0</span> &amp;&amp; b == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        max_bits.<span class="built_in">push_back</span>(a - b * <span class="number">10</span>);</span><br><span class="line">        j *= <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    max_bits.<span class="built_in">push_back</span>(INT_MAX / j);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (bits.<span class="built_in">size</span>() &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">      	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    vector&lt;<span class="type">int</span>&gt;::iterator begin = bits.<span class="built_in">begin</span>();</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt;::iterator end = bits.<span class="built_in">end</span>() - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (begin &lt; end) &#123;</span><br><span class="line">        <span class="type">int</span> temp = *begin;</span><br><span class="line">        *begin = *end;</span><br><span class="line">        *end = temp;</span><br><span class="line"></span><br><span class="line">        begin++; end--;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (bits.<span class="built_in">size</span>() == max_bits.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = bits.<span class="built_in">size</span>() - <span class="number">1</span>; j &gt;= <span class="number">0</span>; j--) &#123;</span><br><span class="line">            <span class="keyword">if</span> ((x &gt; <span class="number">0</span> &amp;&amp; bits[j] &gt; max_bits[j]) ||</span><br><span class="line">                (x &lt; <span class="number">0</span> &amp;&amp; -bits[j] &gt; max_bits[j]) ) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> ((x &gt; <span class="number">0</span> &amp;&amp; bits[j] &lt; max_bits[j]) ||</span><br><span class="line">                       (x &lt; <span class="number">0</span> &amp;&amp; -bits[j] &lt; max_bits[j])) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> y = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>, k = <span class="number">0</span>; k &lt; bits.<span class="built_in">size</span>(); j *= <span class="number">10</span>, k++) &#123;</span><br><span class="line">        y += j * bits[k];</span><br><span class="line">        <span class="keyword">if</span> (j == <span class="number">1000000000</span>)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Reference-Solution"><a href="#Reference-Solution" class="headerlink" title="Reference Solution"></a>Reference Solution</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">reverse</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> rev = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (x != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="type">int</span> pop = x % <span class="number">10</span>;</span><br><span class="line">        x /= <span class="number">10</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (rev &gt; INT_MAX / <span class="number">10</span> ||</span><br><span class="line">            (rev == INT_MAX / <span class="number">10</span> &amp;&amp; pop &gt; <span class="number">7</span>))</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (rev &lt; INT_MIN / <span class="number">10</span> || </span><br><span class="line">            (rev == INT_MIN / <span class="number">10</span> &amp;&amp; pop &lt; <span class="number">-8</span>))</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        </span><br><span class="line">        rev = rev * <span class="number">10</span> + pop;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> rev;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Linked-List-Remove-Nth-Node-From-End-of-List"><a href="#Linked-List-Remove-Nth-Node-From-End-of-List" class="headerlink" title="[Linked List] Remove Nth Node From End of List"></a>[Linked List] Remove Nth Node From End of List</h2><p>Given a linked list, remove the <em>n</em>-th node from the end of list and return its head.</p>
+<p><strong>Example</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Given linked list: 1-&gt;2-&gt;3-&gt;4-&gt;5, and n = 2.</span><br><span class="line">After removing the second node from the end, the linked list becomes 1-&gt;2-&gt;3-&gt;5.</span><br></pre></td></tr></table></figure>
+
+<p><strong>Note</strong></p>
+<p>Given <em>n</em> will always be valid.</p>
+<p><strong>Follow up</strong></p>
+<p>Do this in one pass.</p>
+<h3 id="Initial-Thoughts"><a href="#Initial-Thoughts" class="headerlink" title="Initial Thoughts"></a>Initial Thoughts</h3><p>Accomplishing the task in two passes is intuitive, by calculating the size of the linked list first and then find the nth node from the end.</p>
+<p>Using two pointers on the linked list, we can do this in one pass. The main idea is that, the first pointer points to the head node, the second one points to the nth child of the head node, between which there is a n-1 gap. Then move the two pointers at the same time until the second pointer reaches the end, the first pointer then points to the very node to be deleted.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">removeNthFromEnd</span><span class="params">(ListNode* head, <span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">    ListNode*&amp; first = head;</span><br><span class="line">    ListNode* second = first;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        second = second-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (second != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        first = first-&gt;next;</span><br><span class="line">        second = second-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// <span class="doctag">TODO:</span> delete the node where the first pointer points</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>What is difficult is how to correctly delete the node. The problem is that the node might be the tail node of the linked list. Directly deleting it as what is done in <a href="#">Delete Node in a Linked List</a> may cause runtime error since it doesn’t handle the tail node correctly.</p>
+<p>The right solution should be to find the parent of the first node instead of the first node. One way to do this is to extend the original linked list by adding a node to its head and then maintain a constant n gap.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">removeNthFromEnd</span><span class="params">(ListNode* head, <span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">    ListNode* parent = <span class="keyword">new</span> <span class="built_in">ListNode</span>(<span class="number">0</span>);</span><br><span class="line">    parent-&gt;next = head;</span><br><span class="line"></span><br><span class="line">    ListNode* first = parent;</span><br><span class="line">    ListNode* second = parent;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt;= n; i++) &#123;</span><br><span class="line">    	second = second-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (second != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        first = first-&gt;next;</span><br><span class="line">        second = second-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    first-&gt;next = first-&gt;next-&gt;next;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> parent-&gt;next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Linked-List-Reverse-Linked-List"><a href="#Linked-List-Reverse-Linked-List" class="headerlink" title="[Linked List] Reverse Linked List"></a>[Linked List] Reverse Linked List</h2><p>Reverse a singly linked list.</p>
+<p><strong>Example</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: 	1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL</span><br><span class="line">Output: 5-&gt;4-&gt;3-&gt;2-&gt;1-&gt;NULL</span><br></pre></td></tr></table></figure>
+
+<p><strong>Follow up</strong></p>
+<p>Reverse the linked list both in iterative way and recursive way.</p>
+<h3 id="Iterative-Solution"><a href="#Iterative-Solution" class="headerlink" title="Iterative Solution"></a>Iterative Solution</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">reverseList</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (head == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line"></span><br><span class="line">    ListNode *current = head-&gt;next;</span><br><span class="line">    ListNode *last = head;</span><br><span class="line">    ListNode *temp;</span><br><span class="line"></span><br><span class="line">    head-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (current != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        temp = current-&gt;next;</span><br><span class="line">        current-&gt;next = last;</span><br><span class="line">        last = current;            </span><br><span class="line">        current = temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> last;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Recursive-Solution"><a href="#Recursive-Solution" class="headerlink" title="Recursive Solution"></a>Recursive Solution</h3><h4 id="Initial-Thoughts-1"><a href="#Initial-Thoughts-1" class="headerlink" title="Initial Thoughts"></a>Initial Thoughts</h4><h2 id="Linked-List-Merge-Two-Sorted-Lists"><a href="#Linked-List-Merge-Two-Sorted-Lists" class="headerlink" title="[Linked List] Merge Two Sorted Lists"></a>[Linked List] Merge Two Sorted Lists</h2><p>Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.</p>
+<p><strong>Example</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: 	1-&gt;2-&gt;4, 1-&gt;3-&gt;4</span><br><span class="line">Output: 1-&gt;1-&gt;2-&gt;3-&gt;4-&gt;4</span><br></pre></td></tr></table></figure>
+
+<h3 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">mergeTwoLists</span><span class="params">(ListNode* l1, ListNode* l2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (l1 == <span class="literal">NULL</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> l2;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (l2 == <span class="literal">NULL</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> l1;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        ListNode* l1First = l1;</span><br><span class="line">        ListNode* l1Second = l1-&gt;next;</span><br><span class="line">        ListNode* l2Target = l2;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (l2Target-&gt;val &lt;= l1First-&gt;val) &#123;</span><br><span class="line">            l2Target-&gt;next = <span class="built_in">mergeTwoLists</span>(l1First, l2Target-&gt;next);</span><br><span class="line">            <span class="keyword">return</span> l2Target;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (l1Second == <span class="literal">NULL</span>) &#123;</span><br><span class="line">            l1First-&gt;next = l2Target;</span><br><span class="line">            <span class="keyword">return</span> l1First;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (l2Target-&gt;val &gt; l1First-&gt;val &amp;&amp; l2Target-&gt;val &lt;= l1Second-&gt;val) &#123;</span><br><span class="line">            l2Target-&gt;next = <span class="built_in">mergeTwoLists</span>(l1Second, l2Target-&gt;next);</span><br><span class="line">            l1First-&gt;next = l2Target;</span><br><span class="line">            <span class="keyword">return</span> l1First;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (l2Target-&gt;val &gt; l1Second-&gt;val) &#123;</span><br><span class="line">            l1Second-&gt;next = <span class="built_in">mergeTwoLists</span>(l1Second-&gt;next, l2Target);</span><br><span class="line">            <span class="keyword">return</span> l1First;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Linked-List-Find-The-Middle"><a href="#Linked-List-Find-The-Middle" class="headerlink" title="[Linked List] Find The Middle"></a>[Linked List] Find The Middle</h2><p>Given a singly linked list, find middle of the linked list. For example, if given linked list is </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1-&gt;2-&gt;3-&gt;4-&gt;5</span><br></pre></td></tr></table></figure>
+
+<p> then output should be 3. </p>
+<p>If there are even nodes, then there would be two middle nodes, we need to print second middle element. For example, if given linked list is</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;6</span><br></pre></td></tr></table></figure>
+
+<p> then output should be 4.</p>
+<h3 id="Initial-Thought"><a href="#Initial-Thought" class="headerlink" title="Initial Thought"></a>Initial Thought</h3><p>Intuitively, the middle node should be the <code>((int)size / 2) + 1</code> node of the linked list, where <code>size</code> is the overall size of the linked list. So we can find it by counting.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">FindMiddle</span><span class="params">(ListNode* head)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Get the overall size of the list</span></span><br><span class="line">    ListNode* cur = head;</span><br><span class="line">    <span class="type">int</span> size = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (cur != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        size++; cur = cur-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Return the ((size / 2) + 1)th node of the list</span></span><br><span class="line">    cur = head;</span><br><span class="line">    <span class="type">int</span> middle = size / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span> (middle &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        middle--; cur = cur-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> cur-&gt;val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The method uses two integers, one linked list node and traverses the list for one and a half times.</p>
+<h3 id="Two-Pointers-Method"><a href="#Two-Pointers-Method" class="headerlink" title="Two Pointers Method"></a>Two Pointers Method</h3><p>Traverse linked list using two pointers. Move one pointer by one and other pointer by two. When the fast pointer reaches end slow pointer will reach middle of the linked list.</p>
+<p>Below image shows how printMiddle function works in the code:</p>
+<img src="https://tva1.sinaimg.cn/large/006tNbRwgy1gbagtmsfdnj30nm0pb400.jpg" alt="img" style="width:60%;" />
+
+<h3 id="Oddly-Increment-Method"><a href="#Oddly-Increment-Method" class="headerlink" title="Oddly Increment Method"></a>Oddly Increment Method</h3><p>Initialize mid element as head and initialize a counter as 0. Traverse the list from head, while traversing increment the counter and change mid to mid-&gt;next whenever the counter is odd. So the mid will move only half of the total length of the list.</p>
+
+    </div>
+</div>
+
+
 
         </div>
     </div>
@@ -258,19 +344,19 @@
         <div id="video-select" class="content">
             <div class="tile clickable">
                 <div class="select select-bg" select="nWryvhC41Oo" instruction="Spline Interface for Intuitive Skinning Weight Editing"></div>
-                <img src="images/msg.png">
+                <img src="/images/msg.png">
             </div>
             <div class="tile clickable">
                 <div class="select select-bg" select="kNO2yru0e9s" instruction="CCD IK and FABRIK"></div>
-                <img src="images/msg.png">
+                <img src="/images/msg.png">
             </div>
             <div class="tile clickable">
                 <div class="select select-bg" select="4JyUwbqGQyo" instruction="Hexahedron"></div>
-                <img src="images/msg.png">
+                <img src="/images/msg.png">
             </div>
             <div class="tile clickable">
                 <div class="select select-bg" select="T4tKBBSb12Q" instruction="Whale You Were Here"></div>
-                <img src="images/msg.png">
+                <img src="/images/msg.png">
             </div>
         </div>
     </div>

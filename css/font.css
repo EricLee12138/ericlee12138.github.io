@@ -33,6 +33,14 @@
                             1.5px  0       0 var(--color-green),
                             0      1.5px   0 var(--color-green),
                             0      -1.5px  0 var(--color-green);
+    --text-shadow-blue:    -1.5px -1.5px  0 var(--color-blue),
+                            1.5px  -1.5px  0 var(--color-blue),
+                            -1.5px 1.5px   0 var(--color-blue),
+                            1.5px  1.5px   0 var(--color-blue),
+                            -1.5px 0       0 var(--color-blue),
+                            1.5px  0       0 var(--color-blue),
+                            0      1.5px   0 var(--color-blue),
+                            0      -1.5px  0 var(--color-blue);
     --text-shadow-dark:    -1px -1px  0 black,
                             1px  -1px  0 black,
                             -1px 1px   0 black,
@@ -56,6 +64,9 @@ body {
 
 h2 {
     color: var(--color-darker-grey);
+    font-size: 16pt;
+    font-weight: normal;
+    word-spacing: -3px;
 }
 
 h3 {
@@ -75,7 +86,7 @@ h4 {
     font-weight: normal;
 }
 
-p {
+p, ul, li {
     /* margin-inline: 15px; */
     font-size: 10pt;
     line-height: 18px;
@@ -90,9 +101,10 @@ p.no-margin {
     margin: 0;
 }
 
-b {
+b, strong {
     font-weight: inherit;
-    color: var(--color-blue);
+    color: white;
+    text-shadow: var(--text-shadow-blue);
 }
 p.accent b {
     color: white;
@@ -171,8 +183,9 @@ div#leaderboard div.tile div.game-name {
 }
 
 a, a:visited {
-    text-decoration: none;
-    color: inherit;
+    text-decoration: underline 1.5px;
+    text-underline-offset: 1px;
+    color: var(--color-blue);
 }
 /* div.nav-link a:hover h3 {
     transform: translateY(-12px);

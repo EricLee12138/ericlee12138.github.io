@@ -412,7 +412,7 @@ div#main-content div.tile div.tile-title {
     padding-left: 12px;
 }
 div#main-content div.tile div.tile-content {
-    padding: 20px 9px 15px 18px;
+    padding: 20px 18px 15px 18px;
     width: auto;
     display: inline-table;
     background-color: var(--color-white);
@@ -705,4 +705,5 @@ div#cursor-instruction {
     border-image-width: 4px;
     border-image-slice: 2 fill;
     background-color: #fbe29f;
+    word-wrap: break-word;
 }

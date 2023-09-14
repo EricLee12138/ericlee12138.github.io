@@ -1,0 +1,17 @@
+#main-content div.tile div.tile-content {
+    min-height: 575px;
+}
+#main-content div.tile div.tile-content img {
+    width: 100%;
+    image-rendering: auto;
+}
+#main-content div.tile div.tile-content div.video-container {
+    width: 100%;
+}
+#main-content div.tile div.tile-content div.video-container iframe {
+    width: 100%;
+    height: 300px;
+}
+#main-content div.tile div.tile-content pre {
+    text-wrap: balance;
+}

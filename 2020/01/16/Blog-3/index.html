@@ -9,12 +9,9 @@
     <!-- <link rel="shortcut icon" href="/images/ericube.svg"> -->
 
     
-
-    
 <link rel="stylesheet" href="/css/main.css">
 <link rel="stylesheet" href="/css/font.css">
 <link rel="stylesheet" href="/css/cursor.css">
-
 
     
 <script src="/vendor/jquery.min.js"></script>
@@ -27,8 +24,16 @@
     
 <script src="/js/api.js"></script>
 <script src="/js/main.js"></script>
-<script src="/js/game.js"></script>
 <script src="/js/editor.js"></script>
+
+
+    
+
+    
+        
+<link rel="stylesheet" href="/css/post.css">
+
+    
 
 <meta name="generator" content="Hexo 6.3.0"></head>
 
@@ -48,15 +53,15 @@
     </div>
 
     <div id="about" class="tile end border wide">
-        <img src="images/resume.png">
-        <div class="link clickable"><h3>Check My Resume</h3></div>
+        <img src="/images/resume.png">
+        <div class="link clickable" href="/files/resume.pdf"><h3>Check My Resume</h3></div>
     </div>
 </div>
 
 <div id="nav" class="tile border">
     <div class="nav-link-bg">
-        <div id="nav-home" class="nav-link link heart no-frame">
-            <img src="images/logo.png" style="
+        <div id="nav-home" class="nav-link link heart no-frame" href="/">
+            <img src="/images/logo.png" style="
                 position: absolute;
                 right: 10px;
                 bottom: 10px;
@@ -65,12 +70,12 @@
             ">
         </div>
         <div style="display: none;">
-            <img src="images/world.png" style="
+            <img src="/images/world.png" style="
                 position: absolute;
                 bottom: -138px;
                 right: -2px;
             ">
-            <img src="images/world-bg.png" style="
+            <img src="/images/world-bg.png" style="
                 position: absolute;
                 bottom: -101px;
                 right: -2px;
@@ -145,7 +150,7 @@
             <img src="/images/toy.png">
         </div>
     </div>
-    <div id="load-mask" style="
+    <!-- <div id="load-mask" style="
         position: fixed;
         width: 100%;
         height: 100%;
@@ -153,7 +158,7 @@
         top: 0;
         left: 0;
         z-index: 500;
-    "></div>
+    "></div> -->
 </div>
 
         <!-- Body -->
@@ -237,7 +242,35 @@
         </div>
         <div id="main-content" class="content">
             
-    Other
+
+    
+
+<div class="tile wide text">
+    <div class="tile-title">
+        <h3>C# and Shader for the Unity Engine</h3>
+    </div>
+    <div class="tile-content">
+        <h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><h2 id="Basics"><a href="#Basics" class="headerlink" title="Basics"></a>Basics</h2><h3 id="One-second"><a href="#One-second" class="headerlink" title="One second"></a>One second</h3><h3 id="Albedo"><a href="#Albedo" class="headerlink" title="Albedo"></a>Albedo</h3><p>Albedo is a Latin word which means whiteness. It’s simply the color of a material.</p>
+<h3 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h3><p>Unity also supported another programming language, usually referred to as JavaScript, but its actual name is UnityScript. Unity 2017.1.0 still supports it, but the menu item to create a JavaScript asset will be removed in Unity 2017.2.0. Expect support to be dropped entirely after that.</p>
+<h3 id="MonoBehavior"><a href="#MonoBehavior" class="headerlink" title="MonoBehavior"></a>MonoBehavior</h3><p>The idea is that we can program our own components to add custom behavior to game objects. That’s what the behavior part refers to. The mono part refers to the way in which support for custom code was added to Unity. It used the Mono project, which is a multi-platform implementation of the .NET framework.</p>
+<h3 id="Quaternion"><a href="#Quaternion" class="headerlink" title="Quaternion"></a>Quaternion</h3><p>Quaternions are based on complex numbers and are used to represent 3D rotations. While harder to understand than simple 3D vectors, they have some useful characteristics. For example, they don’t suffer from gimbal lock.</p>
+<p><code>UnityEngine.Quaternion</code> is used as a simple value. It is a structure, not a class.</p>
+<h3 id="Static-Methods"><a href="#Static-Methods" class="headerlink" title="Static Methods"></a>Static Methods</h3><p>It’s  an indication that the methods are self-contained. Because static methods aren’t associated with object instances, the compiled code doesn’t have to keep track of which object you’re invoking the method on. This means that static method invocations are a bit faster, but it’s usually not significant enough to worry about.</p>
+<h3 id="Delegate"><a href="#Delegate" class="headerlink" title="Delegate"></a>Delegate</h3><h3 id="Multiplication-or-Division"><a href="#Multiplication-or-Division" class="headerlink" title="Multiplication or Division"></a>Multiplication or Division</h3><p>Both approaches are mathematically equivalent, but multiplication instructions are quicker than division instructions. If you’re performing a lot of calculations inside loops, it’s a simple optimization to make.</p>
+<h3 id="3D-Function"><a href="#3D-Function" class="headerlink" title="3D Function"></a>3D Function</h3><h3 id="Mesh-Material-and-Shader"><a href="#Mesh-Material-and-Shader" class="headerlink" title="Mesh, Material and Shader"></a>Mesh, Material and Shader</h3><p>A <strong>Mesh</strong> is a construct used by the graphics hardware to draw complex stuff. It’s a 3D object that’s either imported into Unity, one of Unity’s default shapes, or generated by code.</p>
+<p><strong>Materials</strong> are used to define the visual properties of objects. They can range from very simple, like a constant color, to very complex.</p>
+<p>Materials consist of a shader and whatever data the shader needs. <strong>Shaders</strong> are basically scripts that tell the graphics card how an object’s polygons should be drawn.</p>
+<h3 id="Why-use-FixedUpdate-and-not-Update"><a href="#Why-use-FixedUpdate-and-not-Update" class="headerlink" title="Why use FixedUpdate and not Update?"></a>Why use FixedUpdate and not Update?</h3><p>Using <code>FixedUpdate</code> keeps the spawning independent of the frame rate. If the configured time between spawns is shorter than the frame time, using <code>Update</code> would cause spawn delays. And as the point of this scene is to tank our frame rate, that will happen.</p>
+<p>You could use a <code>while</code> loop instead of an <code>if</code> check to catch up on missed spawns, but this would cause infinite spawn loops when <code>timeSinceLastSpawn</code> is accidentally set to zero. Limiting spawning to once per fixed time step is a sane limitation.</p>
+<h3 id="VSync"><a href="#VSync" class="headerlink" title="VSync"></a>VSync</h3><p>Without vsync it is possible to get very high frame rates for simple scenes, going well over 100. This can put unnecessary stress on the hardware. You can prevent this by enforcing a maximum frame rate through code by setting the <code>Application.targetFrameRate</code> property. Be aware that this setting persists in the editor even after exiting play mode. Setting it to −1 will remove the limitation.</p>
+<h2 id="Movement"><a href="#Movement" class="headerlink" title="Movement"></a>Movement</h2><h3 id="FixedUpdate"><a href="#FixedUpdate" class="headerlink" title="FixedUpdate"></a>FixedUpdate</h3><p>The physics engine uses a fixed time step, regardless of the frame rate.  For best results we should adjust velocity in lockstep with the fixed time step. We do that by splitting <code>Update</code> method in two parts. The part where we check for input can remain in <code>Update</code>, while the adjustment of the velocity should move to the <code>FixedUpdate</code> method.</p>
+<p>The <code>FixedUpdate</code> method gets invoked at the start of each physics simulation step. How often that happens depends on the time step, which is 0.02, i.e. fifty times per second, by default, but you can change it via project settings or via <code>Time.fixedDeltaTime</code>. When <code>FixedUpdate</code> gets invoked <code>Time.deltaTime</code> is equal to <code>Time.fixedDeltaTime</code>.</p>
+<p>Each frame, a sequence of <code>FixedUpdate</code> get invoked, then <code>Update</code> gets invoked, and finally the frame gets rendered. So if fixed timestep is relatively too large to the frame time, i.e. the times <code>FixedUpdate</code> gets called are relatively too small, the physics simulation will seem lagging and discrete. This can be solved by enabling the <strong>Interpolate</strong> mode of a <code>Rigidbody</code>. Setting it to <strong>Interpolate</strong> makes it linearly interpolate between its last and current position, so it will lag a bit behind its actual position. The other option is <strong>Extrapolate</strong>, which interpolates to its guessed position according to its velocity, which is only really acceptable for objects that have a mostly constant velocity.</p>
+
+    </div>
+</div>
+
+
 
         </div>
     </div>
@@ -258,19 +291,19 @@
         <div id="video-select" class="content">
             <div class="tile clickable">
                 <div class="select select-bg" select="nWryvhC41Oo" instruction="Spline Interface for Intuitive Skinning Weight Editing"></div>
-                <img src="images/msg.png">
+                <img src="/images/msg.png">
             </div>
             <div class="tile clickable">
                 <div class="select select-bg" select="kNO2yru0e9s" instruction="CCD IK and FABRIK"></div>
-                <img src="images/msg.png">
+                <img src="/images/msg.png">
             </div>
             <div class="tile clickable">
                 <div class="select select-bg" select="4JyUwbqGQyo" instruction="Hexahedron"></div>
-                <img src="images/msg.png">
+                <img src="/images/msg.png">
             </div>
             <div class="tile clickable">
                 <div class="select select-bg" select="T4tKBBSb12Q" instruction="Whale You Were Here"></div>
-                <img src="images/msg.png">
+                <img src="/images/msg.png">
             </div>
         </div>
     </div>

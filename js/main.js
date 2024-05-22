@@ -20,25 +20,25 @@ let load = () => {
             let targetX = hovering ? $(target).offsetCenter().left : mousePosition.x;
             let targetY = hovering ? $(target).offsetCenter().top : mousePosition.y;
 
-            let x = moveTo(parseFloat($(cursor).css('left')), targetX, 2*delta);
-            let y = moveTo(parseFloat($(cursor).css('top')), targetY, 2*delta);
+            let x = moveTo(parseFloat($(cursor).css('left')), targetX, .5*delta);
+            let y = moveTo(parseFloat($(cursor).css('top')), targetY, .5*delta);
 
             let targetWidth = hovering ? $(target).outerWidth() + CursorPadding : 30;
             let targetHeight = hovering ? $(target).outerHeight() + CursorPadding : 30;
 
-            let width = moveTo($(cursor).outerWidth(), targetWidth, 2*delta);
-            let height = moveTo($(cursor).outerHeight(), targetHeight, 2*delta);
+            let width = moveTo($(cursor).outerWidth(), targetWidth, .5*delta);
+            let height = moveTo($(cursor).outerHeight(), targetHeight, .5*delta);
 
-            if (hovering) {
-                if ($(target).hasClass('no-frame') || 
-                ($(target).prop('nodeName') == 'IFRAME' && $(target).parents().hasClass('no-frame')))
-                {
-                    $(cursor).css('display', 'none');
-                    // return;
-                }
-            } else {
-                $(cursor).css('display', 'block');
-            }
+            // if (hovering) {
+            //     if ($(target).hasClass('no-frame') || 
+            //     ($(target).prop('nodeName') == 'IFRAME' && $(target).parents().hasClass('no-frame')))
+            //     {
+            //         $(cursor).css('display', 'none');
+            //         // return;
+            //     }
+            // } else {
+            //     $(cursor).css('display', 'block');
+            // }
 
             $(cursor).css('left', x);
             $(cursor).css('top', y);

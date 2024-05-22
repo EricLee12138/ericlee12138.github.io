@@ -1,4 +1,5 @@
 #main-content div.tile div.tile-content {
+    width: 100%;
     min-height: 575px;
 }
 #main-content div.tile div.tile-content img {

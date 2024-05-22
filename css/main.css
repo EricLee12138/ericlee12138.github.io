@@ -399,7 +399,7 @@ div#main-content div.tile {
     border: solid var(--color-blue) 5px;
 }
 div#main-content  div#home-content-about{
-    margin-top: 15px;
+    margin-top: 17px;
 }
 div#main-content div.tile.wide {
     width: 586px;

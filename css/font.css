@@ -184,7 +184,7 @@ div#leaderboard div.tile div.game-name {
 
 a, a:visited {
     text-decoration: underline 1.5px;
-    text-underline-offset: 1px;
+    text-underline-offset: 2px;
     color: var(--color-blue);
 }
 /* div.nav-link a:hover h3 {

@@ -19,31 +19,35 @@ $.when($.ready).then(() => {
         localStorage.setItem('code', editor.getSession().getValue());
     });
 
-    // $(runButton).on('click', (event) => {
-    //     if (running) return;
+    $(runButton).on('click', (event) => {
+        if (running) return;
 
-    //     running = true;
-    //     showStatus('running');
-    //     let runningText = $('<p><span style="color:var(--color-blue);">Running</span></p>');
-    //     $(output).append(runningText);
-    //     $(output).scrollTop($(output).prop('scrollHeight'));
-    //     $.ajax({
-    //         url: 'http://192.168.1.81:80/code/index.php',
-    //         method: 'POST',
-    //         data: {
-    //             language: 'cpp',
-    //             code: editor.getSession().getValue()
-    //         },
-    //         success: (response) => {
-    //             running = false;
-    //             runningText.remove();
-    //             showStatus('success');
-    //             showOutput(response);
+        running = true;
+        showStatus('running');
+        let runningText = $('<p><span style="color:var(--color-blue);">Running</span></p>');
+        $(output).append(runningText);
+        $(output).scrollTop($(output).prop('scrollHeight'));
+        $.ajax({
+            url: 'http://192.168.1.81:80/code/index.php',
+            method: 'POST',
+            data: {
+                language: 'cpp',
+                code: editor.getSession().getValue()
+            },
+            success: (response) => {
+                running = false;
+                runningText.remove();
+                showStatus('success');
+                showOutput(response);
 
-    //             console.log(response);
-    //         }
-    //     });
-    // });
+                console.log(response);
+            },
+            error: () => {
+                showStatus('fail');
+                showOutput();
+            }
+        });
+    });
 
     $(copyButton).on('click', (event) => {
         clearTimeout(timeout);

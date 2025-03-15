@@ -149,6 +149,18 @@ let load = () => {
             targetInstruction = '';
         });
 
+        let switchButton = '#nav-setting-light';
+        let lightOn = true;
+
+        $(switchButton).on('click', () => {
+            if (lightOn) {
+                $(document.body).css('backdrop-filter', 'brightness(0.2)');
+            } else {
+                $(document.body).css('backdrop-filter', 'brightness(1)');
+            }
+            lightOn = !lightOn;
+        });
+
         let catButton = '#nav-setting-cat';
         let cat = '#nav-setting-cat img#cat';
         let catMoving = true;
@@ -211,7 +223,9 @@ let load = () => {
 
             update(timestamp - lastTimestamp);
             lastTimestamp = timestamp;
-            window.requestAnimationFrame(loop);
+            setTimeout(() => {
+                window.requestAnimationFrame(loop);
+            }, 1000 / 120);
         };
         window.requestAnimationFrame(loop);
 

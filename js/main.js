@@ -82,6 +82,7 @@ let load = () => {
         }
 
         $('.link').on('click', function() {
+            console.log("a");
             window.location.href = $(this).attr('href');
         });
 

@@ -21,9 +21,14 @@ div#links div#profile-pic p, div#links div#profile-pic h2, div#links div#profile
     margin: 10px 0;
     letter-spacing: 1pt;
 }
-div#links div.btn {
+div#links a, div#links a:visited {
+    text-decoration: none;
+    text-align: center;
+    color: initial;
+}
+div#links a.btn {
     margin: 0 10px 10px 10px;
 }
-div#links div.btn.wide.full {
+div#links a.btn.wide.full {
     min-width: calc(100% - 120px);
 }

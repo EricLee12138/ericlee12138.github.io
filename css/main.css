@@ -637,7 +637,7 @@ div.tile div.content
 div.tile div.content.no-title {
     border-top: solid 2px var(--color-darker-grey);
 }
-div.btn {
+div.btn, a.btn {
     padding: 0 10px;
     min-width: 50px;
     min-height: 16px;
@@ -662,7 +662,7 @@ div.btn:not(.ignore):active, .clickable:active {
 div.btn.small {
     min-width: 40px;
 }
-div.btn.wide {
+div.btn.wide, a.btn.wide {
     padding: 10px 50px;
 }
 div.btn img {

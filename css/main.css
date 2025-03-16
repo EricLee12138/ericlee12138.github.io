@@ -82,7 +82,7 @@ div#about div {
     height: 82px;
     background-color: var(--color-green);
 }
-div#about img {
+div#about img, div#right div#about img {
     position: absolute;
     width: 71px;
     height: 71px;
@@ -632,6 +632,7 @@ div.tile div.content
     width: 100%;
     min-height: 20px;
     border-top: none;
+    background-color: var(--color-white);
 }
 div.tile div.content.no-title {
     border-top: solid 2px var(--color-darker-grey);

@@ -44,7 +44,7 @@ $.when($.ready).then(() => {
             },
             error: () => {
                 showStatus('fail');
-                showOutput();
+                showError('Server is currently offline.');
             }
         });
     });
@@ -75,6 +75,10 @@ $.when($.ready).then(() => {
     }
     let showOutput = (response) => {
         $(output).append('<p><span style="color:var(--color-green);">Finished</span><br>' + response + '</p>');
+        $(output).scrollTop($(output).prop('scrollHeight'));
+    }
+    let showError = (response) => {
+        $(output).append('<p><span style="color:var(--color-red);">Error</span><br>' + response + '</p>');
         $(output).scrollTop($(output).prop('scrollHeight'));
     }
 });

@@ -1,0 +1,29 @@
+div.mobile {
+    width: calc(350px + 2* var(--tile-margin));
+    height: fit-content;
+    margin: 65px auto 0;
+}
+
+div#links div#profile-pic {
+    width: 100%;
+    margin: 30px 0;
+}
+div#links div#profile-pic img {
+    width: 200px;
+    image-rendering: pixelated;
+    margin: 0 75px 20px;
+}
+div#links div#profile-pic h2 b {
+    letter-spacing: 6pt;
+}
+div#links div#profile-pic p, div#links div#profile-pic h2, div#links div#profile-pic h3 {
+    text-align: center;
+    margin: 10px 0;
+    letter-spacing: 1pt;
+}
+div#links div.btn {
+    margin: 0 10px 10px 10px;
+}
+div#links div.btn.wide.full {
+    min-width: calc(100% - 120px);
+}
